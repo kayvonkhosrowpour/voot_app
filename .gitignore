@@ -1,0 +1,17 @@
+# Build stuff
+.gradle/
+.idea/
+app/build/
+build/
+gradlew
+gradlew.bat
+
+# Android studio stuff
+*.iml
+local.properties
+
+# Java class files
+*.class
+
+# Google stuff
+app/google-services.json
