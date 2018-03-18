@@ -1,18 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.voot_austin.voot.MainActivity">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:id="@+id/title"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="@string/app_name"
+        android:textSize="30sp"
+        android:textAlignment="center"/>
 
-</android.support.constraint.ConstraintLayout>
+    <include layout="@layout/location_layout"/>
+
+    <Button
+        android:id="@+id/representatives_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/Representatives"/>
+    <Button
+        android:id="@+id/elections_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/Upcoming_Elections"/>
+    <Button
+        android:id="@+id/poll_locations_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/Poll_Locations"/>
+
+    <Button
+        android:id="@+id/reminders_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/Reminders"/>
+
+</LinearLayout>

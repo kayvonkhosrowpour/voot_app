@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/rep_name_placeholder"
+            android:textSize="30sp"
+            android:textAlignment="center"/>
+
+        <include layout="@layout/location_layout"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/default_portrait"
+            android:maxHeight="100dp"
+            android:maxWidth="100dp"
+            android:contentDescription="@string/rep_img_placeholder"/>
+
+        <TextView
+            android:id="@+id/rep_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/rep_info_placeholder"/>
+
+        <Button
+            android:id="@+id/call_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/call"/>
+
+        <Button
+            android:id="@+id/email_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/email"/>
+
+    </LinearLayout>
+</ScrollView>

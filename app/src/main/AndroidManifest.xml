@@ -9,6 +9,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyC1vZrrKfyLWKz7QJ9v1qT4zMdUJmAzKZg" />
+
+        <!-- Main activity -->
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -16,6 +26,29 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- Sub activities -->
+        <activity android:name=".RepresentativesActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+        <activity android:name=".PollLocationActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+        <activity android:name=".ElectionsActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+        <activity android:name=".RemindersActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+
     </application>
 
 </manifest>

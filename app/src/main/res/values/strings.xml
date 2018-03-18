@@ -1,3 +1,30 @@
 <resources>
     <string name="app_name">Voot</string>
+
+    <!-- Homepage strings -->
+    <string name="Location">Location:</string>
+    <string name="location_placeholder">Austin, TX 78705</string>
+    <string name="Representatives">Representatives</string>
+    <string name="Poll_Locations">Poll Locations</string>
+    <string name="Upcoming_Elections">Upcoming Elections</string>
+    <string name="Reminders">Reminders</string>
+
+    <!-- Representatives Activity Strings -->
+    <string name="Your_Representatives">Your Representatives</string>
+
+    <!-- Contact Rep Fragment Strings -->
+    <string name="rep_name_placeholder">Celia Israel (D)</string>
+    <string name="rep_info_placeholder">Texas House Member\nDistrict 50\nEl Paso, TX</string>
+    <string name="rep_img_placeholder">Image of representative</string>
+    <string name="call">Call</string>
+    <string name="email">Email</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!--  Voting Locations Activity Strings -->
+
+    <!-- Upcoming Elections Activity Strings -->
+
+
 </resources>
