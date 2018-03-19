@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "108880894642",
+    "firebase_url": "https://vootapp-2a028.firebaseio.com",
+    "project_id": "vootapp-2a028",
+    "storage_bucket": "vootapp-2a028.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:108880894642:android:c44ec456dc1b581b",
+        "android_client_info": {
+          "package_name": "com.voot_austin.voot"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "108880894642-v0h6ilmptf60dcvdqlgm1cqbjvk44gli.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.voot_austin.voot",
+            "certificate_hash": "f0b192b3eb93bc144b10a2ef7d6cf85c608bedef"
+          }
+        },
+        {
+          "client_id": "108880894642-vevk1qamcnp14dh45l8h57rrpsqk5p51.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDavSOAQc_B7Gaaj8cnL6EmPG2g9vgwlVU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "108880894642-vevk1qamcnp14dh45l8h57rrpsqk5p51.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -2,6 +2,13 @@ package com.voot_austin.voot;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import java.lang.Object;
+import java.util.AbstractMap;
+import com.google.api.client.util.GenericData;
+import com.google.api.client.json.GenericJson;
+import com.google.api.services.civicinfo.model.ElectionsQueryRequest;
+
+
 
 public class ElectionsActivity extends AppCompatActivity {
 
@@ -12,4 +19,8 @@ public class ElectionsActivity extends AppCompatActivity {
 
         getSupportActionBar().setTitle("Upcoming Elections");
     }
+
+
+
+
 }
