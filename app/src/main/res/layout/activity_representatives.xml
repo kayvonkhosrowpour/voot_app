@@ -38,5 +38,6 @@
         android:layout_height="wrap_content"
         android:padding="20dp"
         android:textAlignment="center"
+        android:id="@+id/rep_btn"
         android:text="Find Representatives" />
 </LinearLayout>
