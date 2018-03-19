@@ -39,7 +39,7 @@ public class ElectionsActivity extends AppCompatActivity {
     String fElectName;
     String fElectDate;
 
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
