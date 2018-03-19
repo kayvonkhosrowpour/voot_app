@@ -38,6 +38,9 @@ public class ElectionsActivity extends AppCompatActivity {
     String fElectName;
     String fElectDate;
 
+    List<String> stringElections = new ArrayList<String>();
+    Integer numOfElec;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +58,7 @@ public class ElectionsActivity extends AppCompatActivity {
         }
         catch(Exception e) {
             //nothing lol...
-            String elections = "fail";
+            updateVarsError();
         }
     }
 
@@ -65,9 +68,17 @@ public class ElectionsActivity extends AppCompatActivity {
             jelections = jsonElections.getJSONArray("elections");
             fElectName = jelections.getJSONObject(0).get("name").toString();
             fElectDate = jelections.getJSONObject(0).get("electionDay").toString();
+
+            int i;
+            numOfElec = jelections.length();
+            for(i = 0; i < jelections.length(); i++) {
+                stringElections.add(jelections.getJSONObject(i).get("name").toString() + '\n' + jelections.getJSONObject(i).get("electionDay").toString());
+            }
+
         }
         catch(Exception e){
             //nothing lol
+            updateVarsError();
         }
     }
 
@@ -106,7 +117,20 @@ public class ElectionsActivity extends AppCompatActivity {
 
     public void updateVars() {
         //print it on screen
-        ((TextView) findViewById(R.id.text1)).setText(fElectName + "\n" + fElectDate);
+        String longString = "";
+
+        int i;
+
+        for(i = 0; i < stringElections.size(); i++) {
+            longString += stringElections.get(i);
+            longString += "\n\n";
+        }
+
+        ((TextView) findViewById(R.id.text1)).setText(numOfElec + "\n\n" + longString);
+    }
+
+    public void updateVarsError() {
+        ((TextView) findViewById(R.id.text1)).setText("you messed up lol");
     }
 
 }
