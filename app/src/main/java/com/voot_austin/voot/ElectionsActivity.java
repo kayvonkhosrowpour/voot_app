@@ -33,14 +33,13 @@ import java.net.ProtocolException;
 
 public class ElectionsActivity extends AppCompatActivity {
 
+
     JSONObject jsonElections;
     JSONArray jelections;
     String fElectName;
     String fElectDate;
-
     List<String> stringElections = new ArrayList<String>();
     Integer numOfElec;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
