@@ -28,8 +28,13 @@
     <!-- Upcoming Elections Activity Strings -->
     <string name="upcoming_elections">Upcoming Elections</string>
     <string name="google_civic_info_api_request_url">https://www.googleapis.com/civicinfo/v2/elections?key=AIzaSyDavSOAQc_B7Gaaj8cnL6EmPG2g9vgwlVU</string>
+    <string name="first_election">first election</string>
 
     <!-- Reminders Activity Strings -->
     <string name="reminders">Reminders</string>
+
+    <!-- Login Sign up Activity Strings -->
+    <string name="password">Password</string>
+    <string name="login">Login</string>
 
 </resources>
