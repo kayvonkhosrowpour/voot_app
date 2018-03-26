@@ -22,9 +22,14 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-    <!--  Voting Locations Activity Strings -->
+    <!--  Poll Locations Activity Strings -->
+    <string name="poll_locations">Poll Locations</string>
 
     <!-- Upcoming Elections Activity Strings -->
+    <string name="upcoming_elections">Upcoming Elections</string>
+    <string name="google_civic_info_api_request_url">https://www.googleapis.com/civicinfo/v2/elections?key=AIzaSyDavSOAQc_B7Gaaj8cnL6EmPG2g9vgwlVU</string>
 
+    <!-- Reminders Activity Strings -->
+    <string name="reminders">Reminders</string>
 
 </resources>

@@ -22,7 +22,7 @@ public class RepresentativesActivity extends FragmentActivity {
         // get a FragmentManager to access and manage fragments
         fragmentManager = getSupportFragmentManager();
 
-        sendRequest = (Button) findViewById(R.id.rep_btn);
+        sendRequest = findViewById(R.id.rep_btn);
 
         sendRequest.setOnClickListener(new View.OnClickListener() {
 

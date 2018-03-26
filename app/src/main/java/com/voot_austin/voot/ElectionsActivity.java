@@ -33,22 +33,22 @@ import java.net.ProtocolException;
 
 public class ElectionsActivity extends AppCompatActivity {
 
-
-    JSONObject jsonElections;
-    JSONArray jelections;
-    String fElectName;
-    String fElectDate;
-    List<String> stringElections = new ArrayList<String>();
-    Integer numOfElec;
+    private JSONObject jsonElections;
+    private JSONArray jelections;
+    private String fElectName;
+    private String fElectDate;
+    private List<String> stringElections = new ArrayList<>();
+    private Integer numOfElec;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_elections);
 
-        getSupportActionBar().setTitle("Upcoming Elections");
+        if (getSupportActionBar() != null)
+            getSupportActionBar().setTitle(getString(R.string.upcoming_elections));
 
-        String requestURL = "https://www.googleapis.com/civicinfo/v2/elections?key=AIzaSyDavSOAQc_B7Gaaj8cnL6EmPG2g9vgwlVU";
+        String requestURL = getString(R.string.google_civic_info_api_request_url);
 
         try{
             String elections = new GetUrlContentTask().execute(requestURL).get();
@@ -97,17 +97,11 @@ public class ElectionsActivity extends AppCompatActivity {
                 StringBuilder response = new StringBuilder();
 
                 while((inLine = in.readLine()) != null) {
-
                     response.append(inLine);
                 }
+
                 return response.toString();
-            } catch (ProtocolException e) {
-                e.printStackTrace();
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
             } catch (IOException e) {
-                e.printStackTrace();
-            } catch (Exception e) {
                 e.printStackTrace();
             }
             return content;
