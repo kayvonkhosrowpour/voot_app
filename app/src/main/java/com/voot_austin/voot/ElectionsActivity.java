@@ -19,8 +19,6 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 import java.net.HttpURLConnection;
@@ -125,11 +123,13 @@ public class ElectionsActivity extends AppCompatActivity {
             longString += "\n\n";
         }
 
-        ((TextView) findViewById(R.id.text1)).setText(numOfElec + "\n\n" + longString);
+        String longerString = "Number of elections: " + numOfElec + "\n\n" + longString;
+
+        ((TextView) findViewById(R.id.text1)).setText(longerString);
     }
 
     public void updateVarsError() {
-        ((TextView) findViewById(R.id.text1)).setText("you messed up lol");
+        ((TextView) findViewById(R.id.text1)).setText("you messed up");
     }
 
 }

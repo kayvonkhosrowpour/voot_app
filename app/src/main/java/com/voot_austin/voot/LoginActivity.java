@@ -33,8 +33,8 @@ public class LoginActivity extends AppCompatActivity {
                 String email = etEmail.getText().toString();
                 String password = etPassword.getText().toString();
 
-                mAuth.signInWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+               // mAuth.signInWithEmailAndPassword(email, password)
+                        /*.addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
@@ -46,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
                                     Log.w("LOGIN", "signInWithEmail:failure", task.getException());
                                 }
                             }
-                        });
+                        });*/
             }
         });
     }
