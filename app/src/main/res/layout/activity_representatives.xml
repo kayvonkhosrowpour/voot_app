@@ -18,20 +18,13 @@
         android:text="Find Your Representatives" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Address" />
+        android:hint="Address" />
 
-    <EditText
-        android:id="@+id/editText2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Election ID" />
 
     <Button
         android:layout_width="match_parent"
@@ -39,5 +32,6 @@
         android:padding="20dp"
         android:textAlignment="center"
         android:id="@+id/rep_btn"
+        android:onClick="sendRequestForRepresentatives"
         android:text="Find Representatives" />
 </LinearLayout>
