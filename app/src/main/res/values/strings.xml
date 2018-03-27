@@ -36,5 +36,12 @@
     <!-- Login Sign up Activity Strings -->
     <string name="password">Password</string>
     <string name="login">Login</string>
+    <string name="sign_up">Sign Up</string>
+
+    <!-- Success messages -->
+    <string name="auth_success">Authentication successful!</string>
+
+    <!-- Error messages -->
+    <string name="auth_failed_error">Authentication failed, please try again later.</string>
 
 </resources>

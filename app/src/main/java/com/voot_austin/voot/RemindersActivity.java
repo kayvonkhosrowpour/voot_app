@@ -10,7 +10,7 @@ public class RemindersActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reminders);
 
-        if (getSupportActionBar() != null)
-            getSupportActionBar().setTitle(getString(R.string.reminders));
+//        if (getSupportActionBar() != null)
+//            getSupportActionBar().setTitle(getString(R.string.reminders));
     }
 }

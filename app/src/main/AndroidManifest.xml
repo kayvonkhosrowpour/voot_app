@@ -18,40 +18,42 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyC1vZrrKfyLWKz7QJ9v1qT4zMdUJmAzKZg" />
 
-        <!-- Main activity -->
+        <!-- Main activity for navigation, is started after Login -->
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <!-- Sub activities -->
-        <activity android:name=".RepresentativesActivity">
+        <!-- Login Activity is not a child of the Main activity -->
+        <activity android:name=".GetUserActivity"
+            android:label="@string/login"/>
+
+        <!-- Sub activities of Main Activity -->
+        <activity android:name=".RepresentativesActivity"
+            android:label="@string/Representatives">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-        <activity android:name=".PollLocationActivity">
+        <activity android:name=".PollLocationActivity"
+            android:label="@string/Poll_Locations">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-        <activity android:name=".ElectionsActivity">
+        <activity android:name=".ElectionsActivity"
+            android:label="@string/Upcoming_Elections">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-        <activity android:name=".RemindersActivity">
+        <activity android:name=".RemindersActivity"
+            android:label="@string/Reminders">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
-        </activity>
-        <activity android:name=".LoginActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".LoginActivity" />
         </activity>
 
     </application>

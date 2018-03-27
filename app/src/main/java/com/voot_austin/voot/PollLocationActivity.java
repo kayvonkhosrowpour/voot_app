@@ -16,9 +16,6 @@ public class PollLocationActivity extends AppCompatActivity implements OnMapRead
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_poll_location);
 
-        if (getSupportActionBar() != null)
-            getSupportActionBar().setTitle(getString(R.string.poll_locations));
-
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);

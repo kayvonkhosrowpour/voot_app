@@ -45,8 +45,8 @@ public class ElectionsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_elections);
 
-        if (getSupportActionBar() != null)
-            getSupportActionBar().setTitle(getString(R.string.upcoming_elections));
+//        if (getSupportActionBar() != null)
+//            getSupportActionBar().setTitle(getString(R.string.upcoming_elections));
 
         String requestURL = getString(R.string.google_civic_info_api_request_url);
 
