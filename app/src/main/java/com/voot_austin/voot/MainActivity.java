@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
 
         // redirect to log-in screen if not yet done.
-       // establishLogin();
+        // establishLogin();
 
         // build UI for navigation TODO: change this to something pretty
         initButtons();

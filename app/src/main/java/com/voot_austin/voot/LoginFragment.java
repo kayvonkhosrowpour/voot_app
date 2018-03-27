@@ -22,12 +22,6 @@ import com.google.firebase.auth.FirebaseAuth;
 // Written by Kayvon Khosrowpour
 // on 3/26/18
 public class LoginFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ALREADY_ENTERED_USERNAME = "ALREADY_ENTERED_USERNAME";
-
-    // TODO: Rename and change types of parameters
-    private String alreadyEnteredUsername;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -65,10 +59,12 @@ public class LoginFragment extends Fragment {
                                 if (task.isSuccessful()) {
                                     // Sign in success, update UI with the signed-in user's information
                                     Log.d("LOGIN", "signInWithEmail:success");
-                                    // go back to previous activity
-                                    getActivity().finish();
+
                                     Toast.makeText(getActivity(), getString(R.string.auth_success),
                                             Toast.LENGTH_SHORT).show();
+                                    // go back to previous activity
+                                    getActivity().finish();
+
                                 } else {
                                     // If sign in fails, display a message to the user.
                                     Log.w("LOGIN", "signInWithEmail:failure", task.getException());
