@@ -1,6 +1,7 @@
 package com.voot_austin.voot;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -10,25 +11,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.mortbay.util.ajax.JSON;
-
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
-import java.lang.reflect.Array;
+import java.io.Serializable;
 import java.net.HttpURLConnection;
-import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
 
 
 public class RepresentativesActivity extends FragmentActivity {
@@ -53,11 +45,9 @@ public class RepresentativesActivity extends FragmentActivity {
         fragmentManager = getSupportFragmentManager();
 
         // get User's address from TextView
-        userAddress = (TextView) findViewById(R.id.address);
+        userAddress = findViewById(R.id.address);
 
-        sendRequest = (Button) findViewById(R.id.rep_btn);
-
-
+        sendRequest = findViewById(R.id.rep_btn);
 
         // TODO: exchange and create the appropriate fragments
         // TODO: should have one fragment to list all representatives
@@ -71,10 +61,9 @@ public class RepresentativesActivity extends FragmentActivity {
         // Try to send request to Google Civic API
         if (address.equals(null) || address.equals("null") || address.isEmpty()) {
             //show dialog
-//            Toast.makeText(getApplicationContext(), "Please Enter an Address to See Representatives", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Please Enter an Address to See Representatives", Toast.LENGTH_LONG).show();
         }
         else {
-//            Toast.makeText(getApplicationContext(), "Sending Request to Google API", Toast.LENGTH_LONG).show();
             trySendRequest();
         }
 
@@ -91,9 +80,7 @@ public class RepresentativesActivity extends FragmentActivity {
 
         try {
             requestData = reqTask.execute(requestURL).get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -105,9 +92,17 @@ public class RepresentativesActivity extends FragmentActivity {
 
             if (representatives != null) {
                 // TESTING
-                for (Representative rep : representatives) {
-                    Log.i("REP", rep.name);
-                }
+//                for (Representative rep : representatives) {
+//                    Log.e("REP", rep.office);
+//                }
+                Log.e("ERROR_CHECK", "Attempting to load new activity...");
+
+                // Open View Representatives Activity
+                // and pass the retrieved data
+                Intent viewReps = new Intent(getApplicationContext(), ViewRepresentativesActivity.class);
+                viewReps.putExtra("representatives", (Serializable) representatives);
+
+                startActivity(viewReps);
             }
         }
     }
@@ -188,16 +183,22 @@ public class RepresentativesActivity extends FragmentActivity {
             ArrayList<Representative> Representatives = new ArrayList<>();
             JSONObject fullResp = new JSONObject(response);
             JSONArray officials = fullResp.getJSONArray("officials");
+//            JSONArray offices = fullResp.getJSONArray("offices");
 
-            Log.i("PARSE", "RESPONSE" + officials.toString());
+//            Log.e("API_RESPONSE", "RESPONSE" + offices.toString());
 
-            for (int i = 0; i < officials.length(); i++) {
+            for (int i = officials.length() - 1; i >= 0; i--) {
                 JSONObject official = officials.getJSONObject(i);
 
                 String[] properties = {"name", "address", "party", "phones", "urls", "photoUrl", "channels", "emails"};
 
                 // Create a new representative with the pulled data
                 Representative rep = new Representative();
+//
+//                if (offices.getJSONObject(i) != null) {
+//                    rep.setOffice(offices.getJSONObject(i).getString("name"));
+//
+//                }
 
                 for (String property : properties) {
                     setRepProperty(official, rep, property);
@@ -212,7 +213,6 @@ public class RepresentativesActivity extends FragmentActivity {
         } catch (JSONException e) {
             Log.i("PARSE", "RESPONSE" + response.toString());
             Log.i("PARSE", e.getMessage());
-//            Toast.makeText(getApplicationContext(), "Uh oh, error parsing data...", Toast.LENGTH_LONG).show();
         }
 
         return null;

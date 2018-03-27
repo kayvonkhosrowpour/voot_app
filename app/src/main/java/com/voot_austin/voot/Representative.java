@@ -1,17 +1,42 @@
 package com.voot_austin.voot;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
 import java.util.HashMap;
 
 /**
  * Created by megan on 3/20/18.
  */
 
-public class Representative {
+public class Representative implements Serializable {
+
+    @SerializedName("name")
+    @Expose
     public String name;
+
+    @SerializedName("address")
+    @Expose
     public String address;
+
+    @SerializedName("office")
+    @Expose
     public String office;
+
+    @SerializedName("party")
+    @Expose
     public String party;
+
+    @SerializedName("phoneNumber")
+    @Expose
     public String phoneNumber;
+
+    @SerializedName("photoURL")
+    @Expose
     public String photoURL;
 
 
@@ -94,4 +119,5 @@ public class Representative {
     public void setEmail(String email) {
         this.email = email;
     }
+
 }
