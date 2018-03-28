@@ -1,5 +1,6 @@
 package com.voot_austin.voot;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
@@ -105,6 +106,8 @@ public class ViewRepresentativesActivity extends FragmentActivity {
             }
             else {
                 Picasso.with(getApplicationContext()).load(repDataset.get(i).getPhotoURL()).into(repViewHolder.repPic);
+                Picasso.with(getApplicationContext()).load(repDataset.get(i).getPhotoURL()).into(repViewHolder.repPic);
+
             }
             repViewHolder.repPic.setImageResource(R.drawable.default_portrait);
         }

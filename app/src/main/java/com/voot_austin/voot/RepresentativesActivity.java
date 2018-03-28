@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import org.apache.http.HttpResponse;
@@ -27,13 +28,16 @@ public class RepresentativesActivity extends FragmentActivity {
 
     FragmentManager fragmentManager;
 
-    TextView userAddress;
+    EditText userAddress;
+    EditText userCityState;
+    EditText userZipCode;
+    Button sendRequest;
 
     String apiKey = "AIzaSyDavSOAQc_B7Gaaj8cnL6EmPG2g9vgwlVU";
-    String address = "2900%20Hawks%20Swoop%20Trail%20Pflugerville,%20TX%2078660";
+    String address = ""; // "2900%20Hawks%20Swoop%20Trail%20Pflugerville,%20TX%2078660";
     String requestURL = String.format("https://www.googleapis.com/civicinfo/v2/representatives?key=%s&address=%s", apiKey, address);
 
-    Button sendRequest;
+
     // API Key : AIzaSyDavSOAQc_B7Gaaj8cnL6EmPG2g9vgwlVU
 
     @Override
@@ -44,10 +48,11 @@ public class RepresentativesActivity extends FragmentActivity {
         // get a FragmentManager to access and manage fragments
         fragmentManager = getSupportFragmentManager();
 
-        // get User's address from TextView
+        // Instantiate EditText fields
         userAddress = findViewById(R.id.address);
-
         sendRequest = findViewById(R.id.rep_btn);
+        userCityState = findViewById(R.id.city);
+        userZipCode = findViewById(R.id.zipcode);
 
         // TODO: exchange and create the appropriate fragments
         // TODO: should have one fragment to list all representatives
@@ -56,7 +61,8 @@ public class RepresentativesActivity extends FragmentActivity {
 
     public void sendRequestForRepresentatives(View view) {
         // Grab address from user text view
-//        address = userAddress.getText().toString();
+        address = userAddress.getText().toString() + "%20" + userCityState.getText().toString() + "%20" + userZipCode.getText().toString();
+        address = address.replaceAll("\\s+", "%20");
 
         // Try to send request to Google Civic API
         if (address.equals(null) || address.equals("null") || address.isEmpty()) {
@@ -70,6 +76,9 @@ public class RepresentativesActivity extends FragmentActivity {
         return;
     }
 
+    // Attempts to send a request to the Google
+    // Civic API, and if successful, passes the
+    // retrieved data to the ViewRepresentativesActivity
     private void trySendRequest() {
         // Attempt to retrieve representatives
         // data from API using given address
@@ -91,17 +100,14 @@ public class RepresentativesActivity extends FragmentActivity {
             ArrayList<Representative> representatives = pullRepresentativeData(requestData);
 
             if (representatives != null) {
-                // TESTING
-//                for (Representative rep : representatives) {
-//                    Log.e("REP", rep.office);
-//                }
+
                 Log.e("ERROR_CHECK", "Attempting to load new activity...");
 
                 // Open View Representatives Activity
                 // and pass the retrieved data
                 Intent viewReps = new Intent(getApplicationContext(), ViewRepresentativesActivity.class);
                 viewReps.putExtra("representatives", (Serializable) representatives);
-
+                // Launch ListView of Representatives
                 startActivity(viewReps);
             }
         }
@@ -134,7 +140,7 @@ public class RepresentativesActivity extends FragmentActivity {
                 }
             }
             catch (Exception e) {
-                Log.i("FAILED", "FAILED: " + e.getLocalizedMessage());
+                Log.e("FAILED", "FAILED: " + e.getLocalizedMessage());
                 return "FAILED";
             }
             return null;
@@ -185,7 +191,6 @@ public class RepresentativesActivity extends FragmentActivity {
             JSONArray officials = fullResp.getJSONArray("officials");
 //            JSONArray offices = fullResp.getJSONArray("offices");
 
-//            Log.e("API_RESPONSE", "RESPONSE" + offices.toString());
 
             for (int i = officials.length() - 1; i >= 0; i--) {
                 JSONObject official = officials.getJSONObject(i);
