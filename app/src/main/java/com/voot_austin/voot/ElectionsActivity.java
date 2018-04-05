@@ -3,6 +3,7 @@ package com.voot_austin.voot;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -32,21 +33,24 @@ import java.net.ProtocolException;
 public class ElectionsActivity extends AppCompatActivity {
 
 
-    JSONObject jsonElections;
-    JSONArray jelections;
-    String fElectName;
-    String fElectDate;
-    List<String> stringElections = new ArrayList<String>();
-    Integer numOfElec;
+    JSONObject jsonContests;
+    JSONArray jcontests;
+    String fOffice;
+    //String fElectDate;
+    List<String> stringContests = new ArrayList<String>();
+    Integer numOfContests;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_elections);
 
+        TextView textView = (TextView) findViewById(R.id.text1);
+        textView.setMovementMethod(new ScrollingMovementMethod());
+
         getSupportActionBar().setTitle("Upcoming Elections");
 
-        String requestURL = "https://www.googleapis.com/civicinfo/v2/elections?key=AIzaSyDavSOAQc_B7Gaaj8cnL6EmPG2g9vgwlVU";
+        String requestURL = "https://www.googleapis.com/civicinfo/v2/voterinfo?key=AIzaSyDavSOAQc_B7Gaaj8cnL6EmPG2g9vgwlVU&address=4600%20Elmont%20Dr.%20Austin%20TX&electionId=2000";
 
         try{
             String elections = new GetUrlContentTask().execute(requestURL).get();
@@ -61,15 +65,20 @@ public class ElectionsActivity extends AppCompatActivity {
 
     public void extractVars(String data) {
         try {
-            jsonElections = new JSONObject(data);
-            jelections = jsonElections.getJSONArray("elections");
-            fElectName = jelections.getJSONObject(0).get("name").toString();
-            fElectDate = jelections.getJSONObject(0).get("electionDay").toString();
+            jsonContests = new JSONObject(data);
+            jcontests = jsonContests.getJSONArray("contests");
+            fOffice = jcontests.getJSONObject(0).get("office").toString();
+            //fElectDate = jelections.getJSONObject(0).get("electionDay").toString();
 
             int i;
-            numOfElec = jelections.length();
-            for(i = 0; i < jelections.length(); i++) {
-                stringElections.add(jelections.getJSONObject(i).get("name").toString() + '\n' + jelections.getJSONObject(i).get("electionDay").toString());
+            numOfContests = jcontests.length();
+            for(i = 0; i < jcontests.length(); i++) {
+                String type = jcontests.getJSONObject(i).get("type").toString();
+                if(type.equals("Referendum")) {
+                    stringContests.add(jcontests.getJSONObject(i).get("referendumTitle").toString());
+                } else {
+                    stringContests.add(jcontests.getJSONObject(i).get("office").toString());
+                }
             }
 
         }
@@ -118,18 +127,18 @@ public class ElectionsActivity extends AppCompatActivity {
 
         int i;
 
-        for(i = 0; i < stringElections.size(); i++) {
-            longString += stringElections.get(i);
+        for(i = 0; i < stringContests.size(); i++) {
+            longString += stringContests.get(i);
             longString += "\n\n";
         }
 
-        String longerString = "Number of elections: " + numOfElec + "\n\n" + longString;
+        String longerString = "Number of elections: " + numOfContests + "\n\n" + longString;
 
         ((TextView) findViewById(R.id.text1)).setText(longerString);
     }
 
     public void updateVarsError() {
-        ((TextView) findViewById(R.id.text1)).setText("you messed up");
+        ((TextView) findViewById(R.id.text1)).setText("Error 404");
     }
 
 }
