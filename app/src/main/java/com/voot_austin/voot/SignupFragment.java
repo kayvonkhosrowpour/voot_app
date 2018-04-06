@@ -19,6 +19,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -47,6 +49,8 @@ public class SignupFragment extends Fragment {
     public static SignupFragment newInstance(String alreadyEnteredUsername) {
         SignupFragment fragment = new SignupFragment();
 
+        fragment.editTextEntries = new ArrayList<>();
+
         if (alreadyEnteredUsername != null) {
             Bundle args = new Bundle();
             args.putString(ALREADY_ENTERED_USERNAME, alreadyEnteredUsername);
@@ -74,7 +78,7 @@ public class SignupFragment extends Fragment {
         // Inflate the layout for this fragment
         View signupView = inflater.inflate(R.layout.fragment_signup, container, false);
 
-        editTextEntries.add(userEmail = signupView.findViewById(R.id.login_email));
+        editTextEntries.add(userEmail = signupView.findViewById(R.id.email));
         if (alreadyEnteredUsername != null)
             userEmail.setText(alreadyEnteredUsername);
 
@@ -95,6 +99,8 @@ public class SignupFragment extends Fragment {
             public void onClick(View view) {
                 Map<EditText, String> entryMap = getTextEntries();
                 if (entryMap != null) {
+
+                    // create a new authentication
                     mAuth.createUserWithEmailAndPassword(entryMap.get(userEmail), entryMap.get(userPassword))
                             .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                                 @Override
@@ -113,11 +119,14 @@ public class SignupFragment extends Fragment {
                                     }
                                 }
                             });
+
+                    //get reference
+                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference(USERS_TABLE);
+
                 }
             }
 
         });
-
 
         return signupView;
     }
@@ -149,11 +158,11 @@ public class SignupFragment extends Fragment {
         // validate userPassword
         String userPassword_str = userPassword.getText().toString();
         boolean noTrailingWhiteSpace = userPassword_str.trim().length() == userPassword_str.length();
-        boolean containsUppercase = !userPassword_str.equals(userPassword_str.toUpperCase());
-        boolean containsLowercase = !userPassword_str.equals(userPassword_str.toLowerCase());
+        boolean containsLowercase = !userPassword_str.equals(userPassword_str.toUpperCase());
+        boolean containsUppercase = !userPassword_str.equals(userPassword_str.toLowerCase());
         boolean isAtLeast8 = userPassword_str.length() >= 8;
         boolean hasSpecial = !userPassword_str.matches("[A-Za-z0-9 ]*");
-        boolean confirmEquals = userEmail_str.equals(confirmPassword.getText().toString());
+        boolean confirmEquals = userPassword_str.equals(confirmPassword.getText().toString().trim());
         boolean pwdHasAllConditions = noTrailingWhiteSpace && containsUppercase
                                         && containsLowercase && isAtLeast8
                                         && hasSpecial && confirmEquals;
@@ -196,11 +205,11 @@ public class SignupFragment extends Fragment {
         String county_str = county.getText().toString().trim();
         String zipCode_str = zipCode.getText().toString().trim();
         String state_str = state.getText().toString().trim();
-        if (street_str.matches("[a-zA-Z]*") &&
-                city_str.matches("[a-zA-Z]*") &&
+        if (street_str.matches("[a-zA-Z\\s0-9]*") &&
+                city_str.matches("[a-zA-Z\\s]*") &&
                 county_str.matches("[a-zA-Z]*") &&
-                zipCode_str.matches("[0-9]{6}") &&
-                state_str.matches("[a-zA-Z]{2}]"))
+                zipCode_str.matches("[0-9]{5,6}") &&
+                state_str.matches("[a-zA-Z]{2}"))
         {
             entryMap.put(street, street_str);
             entryMap.put(city, city_str);
@@ -208,6 +217,12 @@ public class SignupFragment extends Fragment {
             entryMap.put(zipCode, zipCode_str);
             entryMap.put(state, state_str);
         } else {
+
+            Log.d("DEBUGSON", String.format("\n\n\n\n\n\n%b, %b, %b, %b, %b", street_str.matches("[a-zA-Z\\s0-9]*"), city_str.matches("[a-zA-Z]*"),
+                    county_str.matches("[a-zA-Z]*"),
+                    zipCode_str.matches("[0-9]{5,6}"),
+                    state_str.matches("[a-zA-Z]{2,}")));
+
             Toast.makeText(getActivity(), getString(R.string.address_invalid), Toast.LENGTH_SHORT).show();
             return null;
         }

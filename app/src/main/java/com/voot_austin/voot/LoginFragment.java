@@ -1,6 +1,7 @@
 package com.voot_austin.voot;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,18 +41,27 @@ public class LoginFragment extends Fragment {
         // Create FirebaseAuth
         final FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
+        Log.d("LOGIN FRAG MSG", "\n\n\n\n\nWE ARE CREATING THE LOGIN FRAGMENT\n\n\n\n\n");
+
         // Inflate the layout for this fragment
         View loginView = inflater.inflate(R.layout.fragment_login, container, false);
 
         Button loginButton = loginView.findViewById(R.id.login_button);
+        Button signupButton = loginView.findViewById(R.id.sign_up_button);
         final EditText etEmail = loginView.findViewById(R.id.login_email);
         final EditText etPassword = loginView.findViewById(R.id.login_password);
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                Log.d("LOGIN BUTTON DEBUG MSG", "\n\n\n\n\nWE HAVE ENTERED THE LOGIN BUTTON ON CLICK\n\n\n\n\n");
+
                 String email = etEmail.getText().toString();
                 String password = etPassword.getText().toString();
+
+                if (email.trim().isEmpty() || password.trim().isEmpty())
+                    return;
 
                 mAuth.signInWithEmailAndPassword(email, password)
                         .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
@@ -73,6 +84,27 @@ public class LoginFragment extends Fragment {
                                 }
                             }
                         });
+            }
+        });
+
+        signupButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                // Make the signup fragment
+                String email = etEmail.getText().toString();
+                SignupFragment signupFragment = SignupFragment.newInstance(email);
+
+                // Add the fragment to the 'fragment_container' FrameLayout
+                if (getActivity().findViewById(R.id.fragment_container) != null) {
+                    FrameLayout frameLayout = getActivity().findViewById(R.id.fragment_container);
+                    frameLayout.removeAllViews();
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                                 .replace(R.id.fragment_container, signupFragment).addToBackStack("Signup Frag").commit();
+                } else {
+                    throw new IllegalStateException("IN LOGIN FRAGMENT: fragment container is null");
+                }
+
             }
         });
 

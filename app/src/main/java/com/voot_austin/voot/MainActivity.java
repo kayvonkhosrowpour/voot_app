@@ -3,7 +3,9 @@ package com.voot_austin.voot;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -21,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
 
         // redirect to log-in screen if not yet done.
-        // establishLogin();
+        establishLogin();
 
         // build UI for navigation TODO: change this to something pretty
         initButtons();
@@ -35,10 +37,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void establishLogin() {
 
+        Log.d("\n\n\nDEBUG\n\\n\n", "WE ARE EStABLISHING LOGIN");
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
         if (currentUser == null) {
             Intent intent = new Intent(this, GetUserActivity.class);
             startActivity(intent);
+        } else {
+            Toast.makeText(this, currentUser.getEmail(), Toast.LENGTH_LONG).show();
         }
 
     }
