@@ -58,6 +58,7 @@ public class ViewRepresentativesActivity extends FragmentActivity {
             CardView repCard;
             TextView name;
             TextView office;
+            TextView party;
             ImageView repPic;
 
             public RepViewHolder (View repView) {
@@ -66,6 +67,7 @@ public class ViewRepresentativesActivity extends FragmentActivity {
                 name = repView.findViewById(R.id.repName);
                 office = repView.findViewById(R.id.repPos);
                 repPic = repView.findViewById(R.id.repPhoto);
+                party = repView.findViewById(R.id.repParty);
             }
         }
 
@@ -90,15 +92,8 @@ public class ViewRepresentativesActivity extends FragmentActivity {
             repViewHolder.name.setText(repDataset.get(i).getName());
 
             // Set the text information for the representative card
-            if (repDataset.get(i).getEmail() != null) {
-                repViewHolder.office.setText(repDataset.get(i).getEmail());
-            }
-            else if (repDataset.get(i).getPhoneNumber() != null) {
-                repViewHolder.office.setText(repDataset.get(i).getPhoneNumber());
-            }
-            else {
-                repViewHolder.office.setText(repDataset.get(i).getParty());
-            }
+            repViewHolder.office.setText(repDataset.get(i).getOffice());
+            repViewHolder.party.setText(repDataset.get(i).getParty());
 
             // Set the photo for the representative card
             if (repDataset.get(i).getPhotoURL() == null) {

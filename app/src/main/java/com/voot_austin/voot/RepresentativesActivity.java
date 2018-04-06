@@ -85,8 +85,10 @@ public class RepresentativesActivity extends FragmentActivity {
         String requestData = null;
         APIRequest reqTask = new APIRequest();
 
+        // Construct API String
         requestURL = String.format("https://www.googleapis.com/civicinfo/v2/representatives?key=%s&address=%s", apiKey, address);
 
+        // Attempt to run the async task that sends the request
         try {
             requestData = reqTask.execute(requestURL).get();
         } catch (Exception e) {
@@ -96,6 +98,8 @@ public class RepresentativesActivity extends FragmentActivity {
         if (requestData.equals(null) || requestData.equals("FAILED")) {
             Log.i("ERROR", "Request to API Failed");
         }
+        // On success -> Open the ViewRepresentativesActivity
+        // and pass the list of contructed representatives
         else {
             ArrayList<Representative> representatives = pullRepresentativeData(requestData);
 
@@ -147,22 +151,11 @@ public class RepresentativesActivity extends FragmentActivity {
         }
     }
 
+    // Takes the JSONObject and property name
+    // we are attempting to add. If the JSONObject
+    // has this property, we add it to the representative
+    // object
     private void setRepProperty(JSONObject obj, Representative rep, String property) throws JSONException {
-//        if (property.equals("phones") && obj.has("phones")) {
-//            rep.setPhoneNumber(obj.getJSONArray("phones").get(0).toString());
-//        }
-//        else if (property.equals("channels") && obj.has("channels")) {
-//            JSONArray channels = obj.getJSONArray("channels");
-//            for (int j = 0; j < channels.length(); j++) {
-//                rep.addChannel(channels.getJSONObject(j).getString("type"), channels.getJSONObject(j).getString("id"));
-//            }
-//        }
-//        else if (property.equals("emails") && obj.has("emails")) {
-//            rep.setEmail(obj.getJSONArray("emails").get(0).toString());
-//        }
-//        else if (property.equals("urls") && obj.has("urls")) {
-//            rep.setWebsite(obj.getJSONArray("urls").get(0).toString());
-//        }
         // Check first if the JSON object
         // or array actually exists
         if (obj.has(property)) {
@@ -201,6 +194,32 @@ public class RepresentativesActivity extends FragmentActivity {
                 }
             }
         }
+        else {
+            setNullProperty(rep, property);
+        }
+    }
+
+    // For properties that don't exist this
+    // sets an error / informational message
+    private void setNullProperty(Representative rep, String property) {
+        if (property.equals("name")) {
+            rep.setName("No name given");
+        }
+        else if (property.equals("party")) {
+            rep.setParty("Unknown Party");
+        }
+        else if (property.equals("emails")) {
+            rep.setEmail("No email given");
+        }
+        else if (property.equals("urls")) {
+            rep.setWebsite("No website given");
+        }
+        else if (property.equals("address")) {
+            rep.setAddress("No address given");
+        }
+        else if (property.equals("phones")) {
+            rep.setPhoneNumber("No phone number given");
+        }
     }
 
     // Processes the JSON Object returned by
@@ -219,6 +238,8 @@ public class RepresentativesActivity extends FragmentActivity {
             for (int j = offices.length() - 1; j >= 0; j--) {
                 String officeName = offices.getJSONObject(j).getString("name");
                 JSONArray officialIndices = offices.getJSONObject(j).getJSONArray("officialIndices");
+
+
 
                 for (int i = 0; i < officialIndices.length(); i++) {
                     JSONObject official = officials.getJSONObject(officialIndices.getInt(i));

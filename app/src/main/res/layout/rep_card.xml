@@ -41,7 +41,16 @@
                 android:id="@+id/repPos"
                 android:layout_toRightOf="@+id/repPhoto"
                 android:layout_below="@+id/repName"
-                android:textSize="15sp"
+                android:textSize="13sp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/repParty"
+                android:layout_toRightOf="@+id/repPhoto"
+                android:layout_below="@+id/repPos"
+                android:textSize="13sp"
                 />
 
         </RelativeLayout>
