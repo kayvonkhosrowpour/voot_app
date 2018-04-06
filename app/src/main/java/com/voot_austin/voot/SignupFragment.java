@@ -97,7 +97,7 @@ public class SignupFragment extends Fragment {
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Map<EditText, String> entryMap = getTextEntries();
+                final Map<EditText, String> entryMap = getTextEntries();
                 if (entryMap != null) {
 
                     // create a new authentication
@@ -111,6 +111,33 @@ public class SignupFragment extends Fragment {
                                         Toast.makeText(getActivity(), getString(R.string.signup_success),
                                                 Toast.LENGTH_SHORT).show();
 
+                                        // get firebase user
+                                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+                                        if (user != null) {
+                                            // get reference to table to store user information
+                                            DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference(DatabaseRefs.USERS_TABLE);
+
+                                            // create user object
+                                            VootUser vootUser = new VootUser(entryMap.get(firstName),
+                                                    entryMap.get(lastName),
+                                                    entryMap.get(userEmail),
+                                                    entryMap.get(street),
+                                                    entryMap.get(city),
+                                                    entryMap.get(county),
+                                                    entryMap.get(state),
+                                                    entryMap.get(zipCode));
+
+                                            // build child
+                                            usersRef.child(user.getUid()).setValue(vootUser);
+
+                                            // done, exit get user activity
+                                            getActivity().finish();
+
+                                        } else {
+                                            throw new NullPointerException("User was null in signup fragment!");
+                                        }
+
                                     } else {
                                         // If sign in fails, display a message to the user.
                                         Log.w(TAG, "createUserWithEmail:failure", task.getException());
@@ -120,32 +147,7 @@ public class SignupFragment extends Fragment {
                                 }
                             });
 
-                    // get firebase user
-                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-                    if (user != null) {
-                        // get reference to table to store user information
-                        DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference(DatabaseRefs.USERS_TABLE);
-
-                        // create user object
-                        VootUser vootUser = new VootUser(entryMap.get(firstName),
-                                                        entryMap.get(lastName),
-                                                        entryMap.get(userEmail),
-                                                        entryMap.get(street),
-                                                        entryMap.get(city),
-                                                        entryMap.get(county),
-                                                        entryMap.get(state),
-                                                        entryMap.get(zipCode));
-
-                        // build child
-                        usersRef.child(user.getUid()).setValue(vootUser);
-
-                        // done, exit get user activity
-                        getActivity().finish();
-
-                    } else {
-                        throw new NullPointerException("User was null in signup fragment!");
-                    }
 
                 }
             }
