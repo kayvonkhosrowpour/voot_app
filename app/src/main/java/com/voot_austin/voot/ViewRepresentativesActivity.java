@@ -1,9 +1,8 @@
 package com.voot_austin.voot;
 
-import android.net.Uri;
+
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,8 +13,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
-
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -92,6 +89,7 @@ public class ViewRepresentativesActivity extends FragmentActivity {
         public void onBindViewHolder (RepViewHolder repViewHolder, int i) {
             repViewHolder.name.setText(repDataset.get(i).getName());
 
+            // Set the text information for the representative card
             if (repDataset.get(i).getEmail() != null) {
                 repViewHolder.office.setText(repDataset.get(i).getEmail());
             }
@@ -101,13 +99,13 @@ public class ViewRepresentativesActivity extends FragmentActivity {
             else {
                 repViewHolder.office.setText(repDataset.get(i).getParty());
             }
+
+            // Set the photo for the representative card
             if (repDataset.get(i).getPhotoURL() == null) {
                 repViewHolder.repPic.setImageResource(R.drawable.default_portrait);
             }
             else {
                 Picasso.with(getApplicationContext()).load(repDataset.get(i).getPhotoURL()).into(repViewHolder.repPic);
-                Picasso.with(getApplicationContext()).load(repDataset.get(i).getPhotoURL()).into(repViewHolder.repPic);
-
             }
             repViewHolder.repPic.setImageResource(R.drawable.default_portrait);
         }

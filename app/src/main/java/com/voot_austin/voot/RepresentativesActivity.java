@@ -148,33 +148,57 @@ public class RepresentativesActivity extends FragmentActivity {
     }
 
     private void setRepProperty(JSONObject obj, Representative rep, String property) throws JSONException {
-        if (property.equals("phones") && obj.has("phones")) {
-            rep.setPhoneNumber(obj.getJSONArray("phones").get(0).toString());
-        }
-        else if (property.equals("channels") && obj.has("channels")) {
-            JSONArray channels = obj.getJSONArray("channels");
-            for (int j = 0; j < channels.length(); j++) {
-                rep.addChannel(channels.getJSONObject(j).getString("type"), channels.getJSONObject(j).getString("id"));
-            }
-        }
-        else if (property.equals("emails") && obj.has("emails")) {
-            rep.setEmail(obj.getJSONArray("emails").get(0).toString());
-        }
-        else if (property.equals("urls") && obj.has("urls")) {
-            rep.setWebsite(obj.getJSONArray("urls").get(0).toString());
-        }
-        else if (obj.has(property)) {
+//        if (property.equals("phones") && obj.has("phones")) {
+//            rep.setPhoneNumber(obj.getJSONArray("phones").get(0).toString());
+//        }
+//        else if (property.equals("channels") && obj.has("channels")) {
+//            JSONArray channels = obj.getJSONArray("channels");
+//            for (int j = 0; j < channels.length(); j++) {
+//                rep.addChannel(channels.getJSONObject(j).getString("type"), channels.getJSONObject(j).getString("id"));
+//            }
+//        }
+//        else if (property.equals("emails") && obj.has("emails")) {
+//            rep.setEmail(obj.getJSONArray("emails").get(0).toString());
+//        }
+//        else if (property.equals("urls") && obj.has("urls")) {
+//            rep.setWebsite(obj.getJSONArray("urls").get(0).toString());
+//        }
+        // Check first if the JSON object
+        // or array actually exists
+        if (obj.has(property)) {
             if (property.equals("name")) {
                 rep.setName(obj.getString("name"));
-            }
-            else if (property.equals("address")) {
-                rep.setAddress(obj.getString("address"));
             }
             else if (property.equals("party")) {
                 rep.setParty(obj.getString("party"));
             }
             else if (property.equals("photoUrl")) {
                 rep.setPhotoURL(obj.getString("photoUrl"));
+            }
+            else if (property.equals("emails")) {
+                rep.setEmail(obj.getJSONArray("emails").get(0).toString());
+            }
+            else if (property.equals("urls")) {
+                rep.setWebsite(obj.getJSONArray("urls").get(0).toString());
+            }
+            else if (property.equals("address")) {
+                JSONArray addressData = obj.getJSONArray("address");
+                String address = "";
+
+                // Contruct the address
+                for (int i = 0; i < addressData.length(); i++) {
+                    address += addressData.get(i).toString() + " ";
+                }
+                rep.setAddress(address);
+            }
+            else if (property.equals("phones")) {
+                rep.setPhoneNumber(obj.getJSONArray("phones").get(0).toString());
+            }
+            else if (property.equals("channels")) {
+                JSONArray channels = obj.getJSONArray("channels");
+                for (int j = 0; j < channels.length(); j++) {
+                    rep.addChannel(channels.getJSONObject(j).getString("type"), channels.getJSONObject(j).getString("id"));
+                }
             }
         }
     }
@@ -189,29 +213,28 @@ public class RepresentativesActivity extends FragmentActivity {
             ArrayList<Representative> Representatives = new ArrayList<>();
             JSONObject fullResp = new JSONObject(response);
             JSONArray officials = fullResp.getJSONArray("officials");
-//            JSONArray offices = fullResp.getJSONArray("offices");
+            JSONArray offices = fullResp.getJSONArray("offices");
+            String[] properties = {"name", "address", "party", "phones", "urls", "photoUrl", "channels", "emails"};
 
+            for (int j = offices.length() - 1; j >= 0; j--) {
+                String officeName = offices.getJSONObject(j).getString("name");
+                JSONArray officialIndices = offices.getJSONObject(j).getJSONArray("officialIndices");
 
-            for (int i = officials.length() - 1; i >= 0; i--) {
-                JSONObject official = officials.getJSONObject(i);
+                for (int i = 0; i < officialIndices.length(); i++) {
+                    JSONObject official = officials.getJSONObject(officialIndices.getInt(i));
 
-                String[] properties = {"name", "address", "party", "phones", "urls", "photoUrl", "channels", "emails"};
+                    Representative rep = new Representative();
+                    rep.setOffice(officeName);
 
-                // Create a new representative with the pulled data
-                Representative rep = new Representative();
-//
-//                if (offices.getJSONObject(i) != null) {
-//                    rep.setOffice(offices.getJSONObject(i).getString("name"));
-//
-//                }
+                    for (String property : properties) {
+                        setRepProperty(official, rep, property);
+                    }
 
-                for (String property : properties) {
-                    setRepProperty(official, rep, property);
+                    // Add the representative to our list
+                    Representatives.add(rep);
                 }
-
-                // Add the representative to our list
-                Representatives.add(rep);
             }
+
 
             return Representatives;
 
