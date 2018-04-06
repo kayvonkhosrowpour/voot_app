@@ -8,6 +8,7 @@
     <string name="Poll_Locations">Poll Locations</string>
     <string name="Upcoming_Elections">Upcoming Elections</string>
     <string name="Reminders">Reminders</string>
+    <string name="user_name_placeholder">John Smith</string>
 
     <!-- Representatives Activity Strings -->
     <string name="Your_Representatives">Your Representatives</string>

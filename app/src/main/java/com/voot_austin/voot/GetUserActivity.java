@@ -1,9 +1,14 @@
 package com.voot_austin.voot;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class GetUserActivity extends AppCompatActivity {
 
@@ -41,6 +46,15 @@ public class GetUserActivity extends AppCompatActivity {
                     .replace(R.id.fragment_container, loginFragment).addToBackStack("Login Frag").commit();
         }
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser != null) {
+            finish();
+        }
     }
 
     @Override

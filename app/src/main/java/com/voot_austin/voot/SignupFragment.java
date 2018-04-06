@@ -120,8 +120,32 @@ public class SignupFragment extends Fragment {
                                 }
                             });
 
-                    //get reference
-                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference(USERS_TABLE);
+                    // get firebase user
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+                    if (user != null) {
+                        // get reference to table to store user information
+                        DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference(DatabaseRefs.USERS_TABLE);
+
+                        // create user object
+                        VootUser vootUser = new VootUser(entryMap.get(firstName),
+                                                        entryMap.get(lastName),
+                                                        entryMap.get(userEmail),
+                                                        entryMap.get(street),
+                                                        entryMap.get(city),
+                                                        entryMap.get(county),
+                                                        entryMap.get(state),
+                                                        entryMap.get(zipCode));
+
+                        // build child
+                        usersRef.child(user.getUid()).setValue(vootUser);
+
+                        // done, exit get user activity
+                        getActivity().finish();
+
+                    } else {
+                        throw new NullPointerException("User was null in signup fragment!");
+                    }
 
                 }
             }

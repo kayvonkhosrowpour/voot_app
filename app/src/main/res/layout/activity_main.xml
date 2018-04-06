@@ -15,6 +15,12 @@
         android:textSize="30sp"
         android:textAlignment="center"/>
 
+    <TextView
+        android:id="@+id/user_greeting"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/user_name_placeholder"/>
+
     <include layout="@layout/location_layout"/>
 
     <Button
