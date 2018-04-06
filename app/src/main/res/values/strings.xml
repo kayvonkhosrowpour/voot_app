@@ -8,6 +8,7 @@
     <string name="Poll_Locations">Poll Locations</string>
     <string name="Upcoming_Elections">Upcoming Elections</string>
     <string name="Reminders">Reminders</string>
+    <string name="user_name_placeholder">John Smith</string>
 
     <!-- Representatives Activity Strings -->
     <string name="Your_Representatives">Your Representatives</string>
@@ -33,15 +34,34 @@
     <!-- Reminders Activity Strings -->
     <string name="reminders">Reminders</string>
 
-    <!-- Login Sign up Activity Strings -->
+    <!-- Login/Sign-up Activity Strings -->
     <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
     <string name="login">Login</string>
     <string name="sign_up">Sign Up</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="street">Street</string>
+    <string name="city">City</string>
+    <string name="zip_code">Zip Code</string>
+    <string name="county">County</string>
+    <string name="state">State</string>
+    <string name="default_state">TX</string>
 
     <!-- Success messages -->
     <string name="auth_success">Authentication successful!</string>
+    <string name="signup_success">Sign-up successful!</string>
 
     <!-- Error messages -->
     <string name="auth_failed_error">Authentication failed, please try again later.</string>
+    <string name="invalid_input">Invalid input.</string>
+    <string name="invalid_email">Invalid email.</string>
+    <string name="no_trailing_white_space">Invalid password: contains trailing.</string>
+    <string name="must_contain_at_least_one_uppercase_char">Password must contain at least one uppercase character.</string>
+    <string name="must_contain_at_least_one_lowercase_char">Password must contain at least one lowercase character.</string>
+    <string name="must_by_at_least_8_chars_long">Password must be at least 8 characters long.</string>
+    <string name="must_contain_at_least_1_special_char">Password must contain at least 1 special character.</string>
+    <string name="passwords_do_not_match">Passwords do not match</string>
+    <string name="address_invalid">Address is invalid</string>
 
 </resources>
