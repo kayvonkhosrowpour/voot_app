@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Voot</string>
 
+    <!-- Navigation strings -->
+    <string name="sign_out">Sign out</string>
+
     <!-- Homepage strings -->
     <string name="Location">Location:</string>
     <string name="location_placeholder">Austin, TX 78705</string>

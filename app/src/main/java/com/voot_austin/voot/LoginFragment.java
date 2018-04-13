@@ -100,7 +100,10 @@ public class LoginFragment extends Fragment {
                     FrameLayout frameLayout = getActivity().findViewById(R.id.fragment_container);
                     frameLayout.removeAllViews();
                     getActivity().getSupportFragmentManager().beginTransaction()
-                                 .replace(R.id.fragment_container, signupFragment).addToBackStack("Signup Frag").commit();
+                                 .add(R.id.fragment_container, signupFragment, "signup")
+                                 .addToBackStack("signup")
+                                 .commit();
+                    ((GetUserActivity)getActivity()).isRoot = false;
                 } else {
                     throw new IllegalStateException("IN LOGIN FRAGMENT: fragment container is null");
                 }
@@ -110,15 +113,5 @@ public class LoginFragment extends Fragment {
 
         return loginView;
     }
-
-    //       // TODO: optional override of this method to retrieve bundle args (probably won't need)
-//    @Override
-//    public void onCreate(Bundle savedInstanceState) {
-//
-//        super.onCreate(savedInstanceState);
-//
-//
-//    }
-
 
 }

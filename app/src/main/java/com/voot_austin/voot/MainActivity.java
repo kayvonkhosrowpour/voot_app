@@ -3,11 +3,16 @@ package com.voot_austin.voot;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -18,7 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
 
-    private boolean DEBUG = true;
+    private boolean DEBUG = false;
 
     // UI Elements
     private TextView userGreeting;
@@ -31,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        FirebaseApp.initializeApp(this);
+
         getUIElements();
 
         if (DEBUG) {
@@ -39,6 +46,11 @@ public class MainActivity extends AppCompatActivity {
 
         // connect to firebase
         firebaseAuth = FirebaseAuth.getInstance();
+
+        // create toolbar
+        Toolbar myToolbar = findViewById(R.id.main_toolbar);
+        setSupportActionBar(myToolbar);
+        myToolbar.inflateMenu(R.menu.main_menu);
 
         // redirect to log-in screen or fill UI with user info
         establishLogin();
@@ -143,6 +155,41 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    // inflate the menu
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return true;
+
+    }
+
+    // Sets up the action bar menu actions (logout)
+     // item is the item that was selected
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+
+            case R.id.action_sign_out:
+                // user chose to sign out
+                launchSignOutRequest();
+                return true;
+            default:
+                // user access not recognized
+                Log.d("MenuItemError", String.format("Item %s not recognized",item.toString()));
+                return super.onOptionsItemSelected(item);
+
+        }
+    }
+
+    // sign user out of Voot
+    private void launchSignOutRequest() {
+        FirebaseAuth.getInstance().signOut();
+        recreate();
     }
 
 }
