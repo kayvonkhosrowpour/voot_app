@@ -11,13 +11,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import java.util.List;
 
-/**
- * Created by megan on 3/26/18.
- */
+// Author of base code: Megan Cooper
+// Additional edits made by: Kayvon Khosrowpour
 
 public class ViewRepresentativesActivity extends FragmentActivity {
 
@@ -54,7 +54,7 @@ public class ViewRepresentativesActivity extends FragmentActivity {
 
         private List<Representative> repDataset;
 
-        public class RepViewHolder extends RecyclerView.ViewHolder {
+        class RepViewHolder extends RecyclerView.ViewHolder {
             CardView repCard;
             TextView name;
             TextView office;
@@ -68,10 +68,19 @@ public class ViewRepresentativesActivity extends FragmentActivity {
                 office = repView.findViewById(R.id.repPos);
                 repPic = repView.findViewById(R.id.repPhoto);
                 party = repView.findViewById(R.id.repParty);
+
+                repView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        // TODO: implement representative view activity/fragment
+                        Toast.makeText(getApplicationContext(), "Representative view not yet implemented", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
             }
         }
 
-        public RepresentativeAdapter (List<Representative> representatives) {
+        RepresentativeAdapter (List<Representative> representatives) {
             this.repDataset = representatives;
         }
 
@@ -109,5 +118,7 @@ public class ViewRepresentativesActivity extends FragmentActivity {
         public void onAttachedToRecyclerView (RecyclerView recyclerView) {
             super.onAttachedToRecyclerView(recyclerView);
         }
+
     }
+
 }

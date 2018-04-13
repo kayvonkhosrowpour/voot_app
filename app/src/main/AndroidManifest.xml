@@ -34,7 +34,8 @@
 
         <!-- Sub activities of Main Activity -->
         <activity android:name=".RepresentativesActivity"
-            android:label="@string/Representatives">
+            android:label="@string/Your_Representatives"
+            android:theme="@style/Theme.AppCompat.Light">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
@@ -58,7 +59,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-        <activity android:name=".ViewRepresentativesActivity">
+        <activity android:name=".ViewRepresentativesActivity"
+            android:theme="@style/Theme.AppCompat.Light">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".RepresentativesActivity" />
