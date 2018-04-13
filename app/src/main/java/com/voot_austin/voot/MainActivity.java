@@ -62,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
     // re-direct to login if not logged in, otherwise update UI
     private void establishLogin() {
 
-        Log.d("\n\n\nDEBUG\n\\n\n", "WE ARE EStABLISHING LOGIN");
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
         if (currentUser == null) {
             Intent intent = new Intent(this, GetUserActivity.class);
