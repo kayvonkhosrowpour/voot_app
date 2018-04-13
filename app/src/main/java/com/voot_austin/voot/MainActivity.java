@@ -48,9 +48,9 @@ public class MainActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
 
         // create toolbar
-        Toolbar myToolbar = findViewById(R.id.main_toolbar);
-        setSupportActionBar(myToolbar);
-        myToolbar.inflateMenu(R.menu.main_menu);
+//        Toolbar myToolbar = findViewById(R.id.main_toolbar);
+//        setSupportActionBar(myToolbar);
+//        myToolbar.inflateMenu(R.menu.main_menu);
 
         // redirect to log-in screen or fill UI with user info
         establishLogin();
@@ -88,7 +88,6 @@ public class MainActivity extends AppCompatActivity {
                 String userEntry = String.format("%s/%s", DatabaseRefs.USERS_TABLE, user.getUid());
                 DatabaseReference userEntryRef = FirebaseDatabase.getInstance().getReference(userEntry);
 
-                // TODO: attach this reference with the UI elements name, location
                 userEntryRef.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {

@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -32,6 +33,7 @@ import static android.content.ContentValues.TAG;
 // on 3/26/18
 public class SignupFragment extends Fragment {
 
+    private CheckBox electionReminders;
     private EditText userEmail, userPassword, confirmPassword, firstName,
                      lastName, street, city, zipCode, county, state;
     private ArrayList<EditText> editTextEntries;
@@ -91,13 +93,30 @@ public class SignupFragment extends Fragment {
         editTextEntries.add(zipCode = signupView.findViewById(R.id.zip_code));
         editTextEntries.add(county = signupView.findViewById(R.id.county));
         editTextEntries.add(state = signupView.findViewById(R.id.state));
+        electionReminders = signupView.findViewById(R.id.upcoming_election_reminders_checkbox);
 
         Button signUpButton = signupView.findViewById(R.id.sign_up_button);
 
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                int i = 0;
+                while (!isNetworkAvailable() && i < 10) {
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException ie) {
+                        throw new RuntimeException("Interrupted in SignupFragment");
+                    }
+                    i++;
+                }
+
+                if (i >= 10)
+                    return;
+
                 final Map<EditText, String> entryMap = getTextEntries();
+
+
                 if (entryMap != null) {
 
                     // create a new authentication
@@ -126,7 +145,8 @@ public class SignupFragment extends Fragment {
                                                     entryMap.get(city),
                                                     entryMap.get(county),
                                                     entryMap.get(state),
-                                                    entryMap.get(zipCode));
+                                                    entryMap.get(zipCode),
+                                                    electionReminders.isChecked());
 
                                             // build child
                                             usersRef.child(user.getUid()).setValue(vootUser);

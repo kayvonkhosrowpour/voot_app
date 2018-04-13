@@ -52,7 +52,8 @@
                 android:value=".MainActivity" />
         </activity>
         <activity android:name=".RemindersActivity"
-            android:label="@string/Reminders">
+            android:label="@string/Reminders"
+            android:windowSoftInputMode="stateHidden">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
