@@ -232,7 +232,7 @@ public class PollLocationActivity extends AppCompatActivity implements OnMapRead
     }
 
     public void updateVarsError() {
-        //nothing smh
+        //nothing
     }
 
 }
