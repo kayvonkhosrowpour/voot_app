@@ -66,6 +66,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        establishLogin();
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         establishLogin(); // double-check that we have a user
@@ -79,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(this, GetUserActivity.class);
             startActivity(intent);
         } else {
-            Toast.makeText(this, String.format("Welcome, %s!", currentUser.getEmail()), Toast.LENGTH_LONG).show();
+            //Toast.makeText(this, String.format("Welcome, %s!", currentUser.getEmail()), Toast.LENGTH_LONG).show();
             // get firebase user
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -87,6 +93,26 @@ public class MainActivity extends AppCompatActivity {
                 // get reference to table to store user information
                 String userEntry = String.format("%s/%s", DatabaseRefs.USERS_TABLE, user.getUid());
                 DatabaseReference userEntryRef = FirebaseDatabase.getInstance().getReference(userEntry);
+
+                userEntryRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        VootUser vootUser = dataSnapshot.getValue(VootUser.class);
+
+                        if (vootUser != null) {
+                            userGreeting.setText(String.format("Hello, %s", vootUser.firstname));
+                            location.setText(String.format("%s, %s, %s, %s",
+                                    vootUser.street, vootUser.city, vootUser.state, vootUser.zipcode));
+                        } else {
+                            throw new NullPointerException("Voot user was found to be null!");
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
 
                 // TODO: attach this reference with the UI elements name, location
                 userEntryRef.addValueEventListener(new ValueEventListener() {
