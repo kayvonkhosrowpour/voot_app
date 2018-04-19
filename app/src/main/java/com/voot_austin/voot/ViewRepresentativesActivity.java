@@ -1,6 +1,7 @@
 package com.voot_austin.voot;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.CardView;
@@ -11,19 +12,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import java.util.List;
 
-/**
- * Created by megan on 3/26/18.
- */
+// Author of base code: Megan Cooper
+// Additional edits made by: Kayvon Khosrowpour
 
 public class ViewRepresentativesActivity extends FragmentActivity {
 
+    // references for intents
+    public static final String REP = "REP";
+
+    // GUI
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
+
+    // data
     private List<Representative> repData;
 
     @Override
@@ -54,24 +61,7 @@ public class ViewRepresentativesActivity extends FragmentActivity {
 
         private List<Representative> repDataset;
 
-        public class RepViewHolder extends RecyclerView.ViewHolder {
-            CardView repCard;
-            TextView name;
-            TextView office;
-            TextView party;
-            ImageView repPic;
-
-            public RepViewHolder (View repView) {
-                super(repView);
-                repCard = repView.findViewById(R.id.repCard);
-                name = repView.findViewById(R.id.repName);
-                office = repView.findViewById(R.id.repPos);
-                repPic = repView.findViewById(R.id.repPhoto);
-                party = repView.findViewById(R.id.repParty);
-            }
-        }
-
-        public RepresentativeAdapter (List<Representative> representatives) {
+        RepresentativeAdapter (List<Representative> representatives) {
             this.repDataset = representatives;
         }
 
@@ -83,8 +73,18 @@ public class ViewRepresentativesActivity extends FragmentActivity {
         @Override
         public RepViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
             View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.rep_card, viewGroup, false);
-            RepViewHolder repView = new RepViewHolder(view);
-            return repView;
+            final int refIndex = i;
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // open ViewIndividualRepActivity
+                    Intent intent = new Intent(getApplicationContext(), ContactRepActivity.class);
+                    intent.putExtra(ViewRepresentativesActivity.REP, repDataset.get(refIndex));
+                    startActivity(intent);
+                }
+            });
+
+            return new RepViewHolder(view);
         }
 
         @Override
@@ -105,9 +105,23 @@ public class ViewRepresentativesActivity extends FragmentActivity {
             repViewHolder.repPic.setImageResource(R.drawable.default_portrait);
         }
 
-        @Override
-        public void onAttachedToRecyclerView (RecyclerView recyclerView) {
-            super.onAttachedToRecyclerView(recyclerView);
+        class RepViewHolder extends RecyclerView.ViewHolder {
+            CardView repCard;
+            TextView name;
+            TextView office;
+            TextView party;
+            ImageView repPic;
+
+            public RepViewHolder (View repView) {
+                super(repView);
+                repCard = repView.findViewById(R.id.repCard);
+                name = repView.findViewById(R.id.repName);
+                office = repView.findViewById(R.id.repPos);
+                repPic = repView.findViewById(R.id.repPhoto);
+                party = repView.findViewById(R.id.repParty);
+            }
         }
+
     }
+
 }

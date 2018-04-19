@@ -3,6 +3,7 @@
     package="com.voot_austin.voot">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
 
     <application
         android:allowBackup="true"
@@ -11,11 +12,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyC1vZrrKfyLWKz7QJ9v1qT4zMdUJmAzKZg" />
@@ -24,45 +23,60 @@
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
         <!-- Login Activity is not a child of the Main activity -->
-        <activity android:name=".GetUserActivity"
-            android:label="@string/login"/>
+        <activity
+            android:name=".GetUserActivity"
+            android:label="@string/login" />
 
         <!-- Sub activities of Main Activity -->
-        <activity android:name=".RepresentativesActivity"
-            android:label="@string/Representatives">
+        <activity
+            android:name=".RepresentativesActivity"
+            android:label="@string/Your_Representatives">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-        <activity android:name=".PollLocationActivity"
+        <activity
+            android:name=".PollLocationActivity"
             android:label="@string/Poll_Locations">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-        <activity android:name=".ElectionsActivity"
+        <activity
+            android:name=".ElectionsActivity"
             android:label="@string/Upcoming_Elections">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-        <activity android:name=".RemindersActivity"
-            android:label="@string/Reminders">
+        <activity
+            android:name=".RemindersActivity"
+            android:label="@string/Reminders"
+            android:windowSoftInputMode="stateHidden">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-        <activity android:name=".ViewRepresentativesActivity">
+        <activity
+            android:name=".ViewRepresentativesActivity"
+            android:label="@string/Your_Representatives">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".RepresentativesActivity" />
         </activity>
-
+        <activity
+            android:name=".ContactRepActivity"
+            android:label="@string/Your_Representative">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ViewRepresentativesActivity" />
+        </activity>
     </application>
 
 </manifest>

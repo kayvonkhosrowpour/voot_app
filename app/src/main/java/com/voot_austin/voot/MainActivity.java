@@ -47,11 +47,6 @@ public class MainActivity extends AppCompatActivity {
         // connect to firebase
         firebaseAuth = FirebaseAuth.getInstance();
 
-        // create toolbar
-        Toolbar myToolbar = findViewById(R.id.main_toolbar);
-        setSupportActionBar(myToolbar);
-        myToolbar.inflateMenu(R.menu.main_menu);
-
         // redirect to log-in screen or fill UI with user info
         establishLogin();
 
@@ -85,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(this, GetUserActivity.class);
             startActivity(intent);
         } else {
-            //Toast.makeText(this, String.format("Welcome, %s!", currentUser.getEmail()), Toast.LENGTH_LONG).show();
+
             // get firebase user
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -114,7 +109,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-                // TODO: attach this reference with the UI elements name, location
                 userEntryRef.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {

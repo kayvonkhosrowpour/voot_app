@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true">
+    android:fillViewport="true"
+    tools:context="com.voot_austin.voot.ContactRepActivity">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -12,6 +13,7 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/rep_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/rep_name_placeholder"
@@ -21,6 +23,7 @@
         <include layout="@layout/location_layout"/>
 
         <ImageView
+            android:id="@+id/portrait"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/default_portrait"
@@ -34,17 +37,27 @@
             android:layout_height="wrap_content"
             android:text="@string/rep_info_placeholder"/>
 
-        <Button
-            android:id="@+id/call_button"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/call"/>
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/call_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/call"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="1"/>
 
-        <Button
-            android:id="@+id/email_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/email"/>
+            <Button
+                android:id="@+id/email_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/email"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="1"/>
+        </LinearLayout>
+
 
     </LinearLayout>
 </ScrollView>

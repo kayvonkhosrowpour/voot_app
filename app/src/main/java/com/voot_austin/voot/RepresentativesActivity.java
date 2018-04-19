@@ -12,6 +12,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import org.apache.http.HttpResponse;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,9 +38,7 @@ public class RepresentativesActivity extends FragmentActivity {
 
     FragmentManager fragmentManager;
 
-    EditText userAddress;
-    EditText userCityState;
-    EditText userZipCode;
+    EditText userAddress, userCityState, userZipCode;
     Button sendRequest;
 
     String apiKey = "AIzaSyDavSOAQc_B7Gaaj8cnL6EmPG2g9vgwlVU";
@@ -45,6 +53,9 @@ public class RepresentativesActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_representatives);
 
+        // initialize Firebase instance for this activity
+        FirebaseApp.initializeApp(getApplicationContext());
+
         // get a FragmentManager to access and manage fragments
         fragmentManager = getSupportFragmentManager();
 
@@ -54,9 +65,44 @@ public class RepresentativesActivity extends FragmentActivity {
         userCityState = findViewById(R.id.city);
         userZipCode = findViewById(R.id.zipcode);
 
-        // TODO: exchange and create the appropriate fragments
-        // TODO: should have one fragment to list all representatives
-        // TODO: should have one fragment that displays rep/contact info
+        retrieveFirebaseEntries();
+
+    }
+
+    // retrieve the address information from the user profile
+    public void retrieveFirebaseEntries() {
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (user == null) {
+            finish();
+        } else {
+            // get reference to table to store user information
+            String userEntry = String.format("%s/%s", DatabaseRefs.USERS_TABLE, user.getUid());
+            DatabaseReference userEntryRef = FirebaseDatabase.getInstance().getReference(userEntry);
+
+            userEntryRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    VootUser vootUser = dataSnapshot.getValue(VootUser.class);
+
+                    if (vootUser != null) {
+                        userAddress.setText(vootUser.street);
+                        userCityState.setText(String.format("%s, %s", vootUser.city, vootUser.state));
+                        userZipCode.setText(vootUser.zipcode);
+                    } else {
+                        throw new NullPointerException("Voot user was found to be null!");
+                    }
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    throw new IllegalStateException("In Main Activity, could not retrieve user data");
+                }
+            });
+        }
+
     }
 
     public void sendRequestForRepresentatives(View view) {
@@ -110,7 +156,7 @@ public class RepresentativesActivity extends FragmentActivity {
                 // Open View Representatives Activity
                 // and pass the retrieved data
                 Intent viewReps = new Intent(getApplicationContext(), ViewRepresentativesActivity.class);
-                viewReps.putExtra("representatives", (Serializable) representatives);
+                viewReps.putExtra("representatives", representatives);
                 // Launch ListView of Representatives
                 startActivity(viewReps);
             }
