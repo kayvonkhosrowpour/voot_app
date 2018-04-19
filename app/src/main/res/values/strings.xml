@@ -15,16 +15,19 @@
 
     <!-- Representatives Activity Strings -->
     <string name="Your_Representatives">Your Representatives</string>
+    <string name="Your_Representative">Your Representative</string>
     <string name="city_state">City , State</string>
     <string name="find_representatives">Find Representatives</string>
     <string name="rep_instructions">You can enter a new address, or just press the button to use your saved address.</string>
 
-    <!-- Contact Rep Fragment Strings -->
+    <!-- Contact Rep Activity Strings -->
     <string name="rep_name_placeholder">Celia Israel (D)</string>
     <string name="rep_info_placeholder">Texas House Member\nDistrict 50\nEl Paso, TX</string>
     <string name="rep_img_placeholder">Image of representative</string>
     <string name="call">Call</string>
     <string name="email">Email</string>
+    <string name="subject">Message from Voot User</string>
+    <string name="email_body">Hello, I am one of your constituents and have some questions for you...</string>
 
     <!--  Poll Locations Activity Strings -->
     <string name="poll_locations">Poll Locations</string>
