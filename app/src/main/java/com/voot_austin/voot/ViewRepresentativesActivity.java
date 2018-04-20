@@ -73,13 +73,13 @@ public class ViewRepresentativesActivity extends FragmentActivity {
         @Override
         public RepViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
             View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.rep_card, viewGroup, false);
-            final int refIndex = i;
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     // open ViewIndividualRepActivity
                     Intent intent = new Intent(getApplicationContext(), ContactRepActivity.class);
-                    intent.putExtra(ViewRepresentativesActivity.REP, repDataset.get(refIndex));
+                    int itemPosition = recyclerView.getChildLayoutPosition(view);
+                    intent.putExtra(ViewRepresentativesActivity.REP, repDataset.get(itemPosition));
                     startActivity(intent);
                 }
             });
