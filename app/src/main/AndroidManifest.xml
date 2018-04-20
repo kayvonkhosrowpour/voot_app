@@ -31,16 +31,10 @@
         <!-- Login Activity is not a child of the Main activity -->
         <activity
             android:name=".GetUserActivity"
-            android:label="@string/login" />
+            android:label="@string/login"
+            android:launchMode="standard"/>
 
         <!-- Sub activities of Main Activity -->
-        <activity
-            android:name=".RepresentativesActivity"
-            android:label="@string/Your_Representatives">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
-        </activity>
         <activity
             android:name=".PollLocationActivity"
             android:label="@string/Poll_Locations">
@@ -64,15 +58,25 @@
                 android:value=".MainActivity" />
         </activity>
         <activity
+            android:name=".RepresentativesActivity"
+            android:label="@string/Your_Representatives"
+            android:launchMode="singleTop">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+        <activity
             android:name=".ViewRepresentativesActivity"
-            android:label="@string/Your_Representatives">
+            android:label="@string/Your_Representatives"
+            android:launchMode="singleTop">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".RepresentativesActivity" />
         </activity>
         <activity
             android:name=".ContactRepActivity"
-            android:label="@string/Your_Representative">
+            android:label="@string/Your_Representative"
+            android:launchMode="standard">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ViewRepresentativesActivity" />

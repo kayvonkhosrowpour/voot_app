@@ -6,14 +6,20 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
 import java.util.HashMap;
 
-/**
- * Created by megan on 3/20/18.
- */
+public class RepParcel implements Parcelable {
 
-public class Representative implements Serializable {
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+
+    }
 
     @SerializedName("name")
     @Expose
@@ -39,7 +45,6 @@ public class Representative implements Serializable {
     @Expose
     public String photoURL;
 
-
     @SerializedName("email")
     @Expose
     public String email;
@@ -51,9 +56,30 @@ public class Representative implements Serializable {
     @Expose
     public HashMap<String, String> channels; // Social Media Links, ex: Twitter -> @myHandle
 
-    public Representative() {
-        channels = new HashMap<>();
+    public RepParcel() {}
+
+    public RepParcel(android.os.Parcel in) {
+        name = in.readString();
+        address = in.readString();
+        office = in.readString();
+        party = in.readString();
+        phoneNumber = in.readString();
+        photoURL = in.readString();
+        email = in.readString();
+        website = in.readString();
     }
+
+    public static final Creator<RepParcel> CREATOR = new Creator<RepParcel>() {
+        @Override
+        public RepParcel createFromParcel(android.os.Parcel in) {
+            return new RepParcel(in);
+        }
+
+        @Override
+        public RepParcel[] newArray(int size) {
+            return new RepParcel[size];
+        }
+    };
 
     public void addChannel(String channelName, String handle) {
         channels.put(channelName, handle);

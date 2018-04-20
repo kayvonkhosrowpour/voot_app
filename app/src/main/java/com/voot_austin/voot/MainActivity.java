@@ -52,6 +52,10 @@ public class MainActivity extends AppCompatActivity {
 
         // build UI for navigation TODO: change this to something pretty
         initButtons();
+
+        // check
+        if (firebaseAuth.getCurrentUser() == null)
+            establishLogin();
     }
 
     // get the UI elements from XML
@@ -81,58 +85,51 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         } else {
 
-            // get firebase user
-            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            // get reference to table to store user information
+            String userEntry = String.format("%s/%s", DatabaseRefs.USERS_TABLE, currentUser.getUid());
+            DatabaseReference userEntryRef = FirebaseDatabase.getInstance().getReference(userEntry);
 
-            if (user != null) {
-                // get reference to table to store user information
-                String userEntry = String.format("%s/%s", DatabaseRefs.USERS_TABLE, user.getUid());
-                DatabaseReference userEntryRef = FirebaseDatabase.getInstance().getReference(userEntry);
+            userEntryRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    VootUser vootUser = dataSnapshot.getValue(VootUser.class);
 
-                userEntryRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        VootUser vootUser = dataSnapshot.getValue(VootUser.class);
+                    if (vootUser != null) {
+                        userGreeting.setText(String.format("Hello, %s", vootUser.firstname));
+                        location.setText(String.format("%s, %s, %s, %s",
+                                vootUser.street, vootUser.city, vootUser.state, vootUser.zipcode));
+                    } else {
+                        throw new NullPointerException("Voot user was found to be null!");
+                    }
+                }
 
-                        if (vootUser != null) {
-                            userGreeting.setText(String.format("Hello, %s", vootUser.firstname));
-                            location.setText(String.format("%s, %s, %s, %s",
-                                    vootUser.street, vootUser.city, vootUser.state, vootUser.zipcode));
-                        } else {
-                            throw new NullPointerException("Voot user was found to be null!");
-                        }
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    throw new IllegalStateException(" In Main activity, could not retrieve user data.");
+                }
+            });
+
+            userEntryRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    VootUser vootUser = dataSnapshot.getValue(VootUser.class);
+
+                    if (vootUser != null) {
+                        userGreeting.setText(String.format("Hello, %s", vootUser.firstname));
+                        location.setText(String.format("%s, %s, %s, %s",
+                                vootUser.street, vootUser.city, vootUser.state, vootUser.zipcode));
+                    } else {
+                        throw new NullPointerException("Voot user was found to be null!");
                     }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
+                }
 
-                    }
-                });
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    throw new IllegalStateException("In Main Activity, could not retrieve user data");
+                }
+            });
 
-                userEntryRef.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        VootUser vootUser = dataSnapshot.getValue(VootUser.class);
-
-                        if (vootUser != null) {
-                            userGreeting.setText(String.format("Hello, %s", vootUser.firstname));
-                            location.setText(String.format("%s, %s, %s, %s",
-                                    vootUser.street, vootUser.city, vootUser.state, vootUser.zipcode));
-                        } else {
-                            throw new NullPointerException("Voot user was found to be null!");
-                        }
-
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        throw new IllegalStateException("In Main Activity, could not retrieve user data");
-                    }
-                });
-
-            } else {
-                throw new NullPointerException("User was null in signup fragment!");
-            }
         }
 
     }

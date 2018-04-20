@@ -148,6 +148,7 @@ public class ContactRepActivity extends AppCompatActivity {
                         "mailto",representative.getEmail(), null));
                 intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.subject));
                 intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.email_body));
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(Intent.createChooser(intent, "Choose an Email client :"));
             }
         });

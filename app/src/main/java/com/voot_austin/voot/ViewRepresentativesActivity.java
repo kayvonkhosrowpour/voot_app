@@ -15,6 +15,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 // Author of base code: Megan Cooper
@@ -24,6 +27,7 @@ public class ViewRepresentativesActivity extends FragmentActivity {
 
     // references for intents
     public static final String REP = "REP";
+    private static final String REPRESENTATIVES = "REPRESENTATIVES";
 
     // GUI
     private RecyclerView recyclerView;
@@ -33,12 +37,48 @@ public class ViewRepresentativesActivity extends FragmentActivity {
     // data
     private List<Representative> repData;
 
+    protected void restoreRepState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        // restore the representatives
+        ArrayList<RepParcel> repParcels = savedInstanceState.getParcelableArrayList(REPRESENTATIVES);
+
+        if (repParcels == null)
+            return;
+
+        ArrayList<Representative> representatives = new ArrayList<>();
+        for (RepParcel rep : repParcels) {
+            Representative r = new Representative();
+            r.setAddress(rep.address);
+            r.setChannels(rep.channels);
+            r.setEmail(rep.email);
+            r.setName(rep.name);
+            r.setOffice(rep.office);
+            r.setParty(rep.party);
+            r.setPhoneNumber(rep.phoneNumber);
+            r.setPhotoURL(rep.photoURL);
+            r.setWebsite(rep.website);
+            representatives.add(r);
+        }
+
+        repData = representatives;
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_rep_list); // assign XML file
 
-        // Instantiate Recycler View
+        // restore the representatives
+        if (savedInstanceState != null)
+            restoreRepState(savedInstanceState);
+
+        // inflate view
+        setContentView(R.layout.fragment_rep_list);
+
+        Toast.makeText(getApplicationContext(), "OnCreateCalled", Toast.LENGTH_LONG).show();
+
+        // inflate Recycler View
         recyclerView = findViewById(R.id.representatives_recycler_view);
 
         // improves performance because changes
@@ -50,7 +90,13 @@ public class ViewRepresentativesActivity extends FragmentActivity {
         recyclerView.setLayoutManager(layoutManager);
 
         // Grab Representative Data from last intent
-        repData = ((List<Representative>) getIntent().getExtras().getSerializable("representatives"));
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null && repData == null)
+            repData = ((List<Representative>) bundle.getSerializable("representatives"));
+
+        if (repData == null) {
+            throw new NullPointerException("Representative Data is null!");
+        }
 
         // Set Adapter for View
         adapter = new RepresentativeAdapter(repData);
@@ -80,6 +126,7 @@ public class ViewRepresentativesActivity extends FragmentActivity {
                     Intent intent = new Intent(getApplicationContext(), ContactRepActivity.class);
                     int itemPosition = recyclerView.getChildLayoutPosition(view);
                     intent.putExtra(ViewRepresentativesActivity.REP, repDataset.get(itemPosition));
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     startActivity(intent);
                 }
             });
@@ -112,7 +159,7 @@ public class ViewRepresentativesActivity extends FragmentActivity {
             TextView party;
             ImageView repPic;
 
-            public RepViewHolder (View repView) {
+            RepViewHolder (View repView) {
                 super(repView);
                 repCard = repView.findViewById(R.id.repCard);
                 name = repView.findViewById(R.id.repName);
@@ -123,5 +170,39 @@ public class ViewRepresentativesActivity extends FragmentActivity {
         }
 
     }
+
+    @Override
+    public void onSaveInstanceState(Bundle saveInstanceState) {
+        ArrayList<RepParcel> repParcels = new ArrayList<>();
+
+        // save the representatives data
+        for (Representative rep : repData) {
+            RepParcel rp = new RepParcel();
+            rp.setAddress(rep.address);
+            rp.setChannels(rep.channels);
+            rp.setEmail(rep.email);
+            rp.setName(rep.name);
+            rp.setPhotoURL(rep.photoURL);
+            rp.setOffice(rep.office);
+            rp.setPhoneNumber(rep.phoneNumber);
+            rp.setWebsite(rep.website);
+            rp.setParty(rep.party);
+
+            repParcels.add(rp);
+
+            saveInstanceState.putParcelableArrayList(REPRESENTATIVES, repParcels);
+        }
+
+        // always call the superclass
+        super.onSaveInstanceState(saveInstanceState);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+
+    }
+
 
 }
