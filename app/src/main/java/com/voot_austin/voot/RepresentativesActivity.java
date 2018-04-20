@@ -6,6 +6,8 @@ import android.os.AsyncTask;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -34,7 +36,7 @@ import java.net.URL;
 import java.util.ArrayList;
 
 
-public class RepresentativesActivity extends FragmentActivity {
+public class RepresentativesActivity extends AppCompatActivity {
 
     FragmentManager fragmentManager;
 

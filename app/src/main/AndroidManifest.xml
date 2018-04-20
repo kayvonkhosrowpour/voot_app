@@ -20,7 +20,8 @@
             android:value="AIzaSyC1vZrrKfyLWKz7QJ9v1qT4zMdUJmAzKZg" />
 
         <!-- Main activity for navigation, is started after Login -->
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

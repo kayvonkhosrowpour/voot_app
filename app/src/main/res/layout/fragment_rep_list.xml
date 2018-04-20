@@ -9,12 +9,6 @@
         android:orientation="vertical"
         tools:context="com.voot_austin.voot.RepresentativesActivity">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/Your_Representatives"
-            android:textSize="30sp"
-            android:textAlignment="center"/>
 
         <include layout="@layout/location_layout"
             android:layout_gravity="center"

@@ -4,6 +4,7 @@ package com.voot_austin.voot;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -23,11 +24,10 @@ import java.util.List;
 // Author of base code: Megan Cooper
 // Additional edits made by: Kayvon Khosrowpour
 
-public class ViewRepresentativesActivity extends FragmentActivity {
+public class ViewRepresentativesActivity extends AppCompatActivity {
 
     // references for intents
     public static final String REP = "REP";
-    private static final String REPRESENTATIVES = "REPRESENTATIVES";
 
     // GUI
     private RecyclerView recyclerView;
@@ -37,42 +37,9 @@ public class ViewRepresentativesActivity extends FragmentActivity {
     // data
     private List<Representative> repData;
 
-    protected void restoreRepState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-
-        // restore the representatives
-        ArrayList<RepParcel> repParcels = savedInstanceState.getParcelableArrayList(REPRESENTATIVES);
-
-        if (repParcels == null)
-            return;
-
-        ArrayList<Representative> representatives = new ArrayList<>();
-        for (RepParcel rep : repParcels) {
-            Representative r = new Representative();
-            r.setAddress(rep.address);
-            r.setChannels(rep.channels);
-            r.setEmail(rep.email);
-            r.setName(rep.name);
-            r.setOffice(rep.office);
-            r.setParty(rep.party);
-            r.setPhoneNumber(rep.phoneNumber);
-            r.setPhotoURL(rep.photoURL);
-            r.setWebsite(rep.website);
-            representatives.add(r);
-        }
-
-        repData = representatives;
-
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // restore the representatives
-        if (savedInstanceState != null)
-            restoreRepState(savedInstanceState);
-
         // inflate view
         setContentView(R.layout.fragment_rep_list);
 
@@ -170,39 +137,5 @@ public class ViewRepresentativesActivity extends FragmentActivity {
         }
 
     }
-
-    @Override
-    public void onSaveInstanceState(Bundle saveInstanceState) {
-        ArrayList<RepParcel> repParcels = new ArrayList<>();
-
-        // save the representatives data
-        for (Representative rep : repData) {
-            RepParcel rp = new RepParcel();
-            rp.setAddress(rep.address);
-            rp.setChannels(rep.channels);
-            rp.setEmail(rep.email);
-            rp.setName(rep.name);
-            rp.setPhotoURL(rep.photoURL);
-            rp.setOffice(rep.office);
-            rp.setPhoneNumber(rep.phoneNumber);
-            rp.setWebsite(rep.website);
-            rp.setParty(rep.party);
-
-            repParcels.add(rp);
-
-            saveInstanceState.putParcelableArrayList(REPRESENTATIVES, repParcels);
-        }
-
-        // always call the superclass
-        super.onSaveInstanceState(saveInstanceState);
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-
-
-    }
-
 
 }
