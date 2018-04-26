@@ -1,11 +1,13 @@
 package com.voot_austin.voot;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.io.Serializable;
 import java.lang.Object;
 import java.util.AbstractMap;
 import com.google.api.client.util.GenericData;
@@ -48,7 +50,7 @@ public class ElectionsActivity extends AppCompatActivity {
 //        if (getSupportActionBar() != null)
 //            getSupportActionBar().setTitle(getString(R.string.upcoming_elections));
 
-        String requestURL = getString(R.string.google_civic_info_api_request_url);
+        String requestURL = "https://www.googleapis.com/civicinfo/v2/voterinfo?key=AIzaSyDavSOAQc_B7Gaaj8cnL6EmPG2g9vgwlVU&address=4600%20Elmont%20Dr.%20Austin%20TX&electionId=2000";
 
         try{
             String elections = new GetUrlContentTask().execute(requestURL).get();
@@ -110,20 +112,33 @@ public class ElectionsActivity extends AppCompatActivity {
 
     public void updateVars() {
         //print it on screen
-        String longString = "";
-
+        /*String longString = "";
         int i;
-
         for(i = 0; i < stringElections.size(); i++) {
             longString += stringElections.get(i);
             longString += "\n\n";
         }
+        ((TextView) findViewById(R.id.text1)).setText(numOfElec + "\n\n" + longString); */
 
-        ((TextView) findViewById(R.id.text1)).setText(numOfElec + "\n\n" + longString);
+        ArrayList<Election> arrlElec = stringToElec(stringElections);
+        Intent viewElec = new Intent(getApplicationContext(), ViewElectionsActivity.class);
+        viewElec.putExtra("elections", (Serializable) arrlElec);
+        // Launch ListView of Representatives
+        startActivity(viewElec);
+    }
+
+    private ArrayList<Election> stringToElec(List<String> stringElections) {
+        ArrayList<Election> arrlElec = new ArrayList<>();
+        for(int i = 0; i < stringElections.size(); i++) {
+            Election e = new Election();
+            e.setName(stringElections.get(i));
+            arrlElec.add(e);
+        }
+        return arrlElec;
     }
 
     public void updateVarsError() {
-        ((TextView) findViewById(R.id.text1)).setText("you messed up lol");
+        ((TextView) findViewById(R.id.text1)).setText("Error 404");
     }
 
 }
