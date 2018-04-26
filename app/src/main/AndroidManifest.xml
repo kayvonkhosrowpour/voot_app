@@ -51,6 +51,12 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
+        <activity android:name=".ViewElectionsActivity"
+            android:label="View_Elections">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
         <activity android:name=".RemindersActivity"
             android:label="@string/Reminders">
             <meta-data

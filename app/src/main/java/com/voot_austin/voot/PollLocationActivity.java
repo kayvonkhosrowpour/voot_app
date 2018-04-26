@@ -73,10 +73,10 @@ public class PollLocationActivity extends AppCompatActivity implements OnMapRead
 
         retrieveFirebaseEntries();
 
-        /* street = "4600 Elmont Dr";
+        street = "4600 Elmont Dr";
         city = "Austin";
         state = "TX";
-        zipcode = "78741"; */
+        zipcode = "78741";
 
         createMarker();
 
@@ -265,6 +265,10 @@ public class PollLocationActivity extends AppCompatActivity implements OnMapRead
 
     private void createMarker() {
         String RU2 = "";
+        respLat = "";
+        respLong = "";
+        addSnippet = "";
+        resp.clear();
 
 
         String[] strSplit = street.split(" ");

@@ -27,10 +27,10 @@ public class ViewElectionsActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_rep_list); // assign XML file
+        setContentView(R.layout.fragment_elec_list); // assign XML file
 
         // Instantiate Recycler View
-        recyclerView = findViewById(R.id.representatives_recycler_view);
+        recyclerView = findViewById(R.id.elections_recycler_view);
 
         // improves performance because changes
         // in content do not change layout size
@@ -40,7 +40,6 @@ public class ViewElectionsActivity extends FragmentActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        // Grab Representative Data from last intent
         elecData = ((List<Election>) getIntent().getExtras().getSerializable("elections"));
 
         // Set Adapter for View
@@ -56,9 +55,9 @@ public class ViewElectionsActivity extends FragmentActivity {
             CardView elecCard;
             TextView name;
 
-            public ElecViewHolder (View repView) {
-                super(repView);
-                name = repView.findViewById(R.id.repName);
+            public ElecViewHolder (View elecView) {
+                super(elecView);
+                name = elecView.findViewById(R.id.elecName);
             }
         }
 
