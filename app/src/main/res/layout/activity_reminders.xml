@@ -40,27 +40,61 @@
             android:layout_height="wrap_content"
             android:text="@string/profile_info"
             android:layout_marginTop="20dp"/>
-        <EditText
-            android:id="@+id/first_name"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_gravity="center"
-            android:hint="@string/first_name"
-            android:inputType="textCapSentences|textAutoCorrect"
-            android:layout_marginTop="20dp" />
 
-        <EditText
-            android:id="@+id/last_name"
+        <LinearLayout
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_gravity="center"
-            android:hint="@string/last_name"
-            android:inputType="textCapSentences|textAutoCorrect"
+            android:orientation="vertical"
             android:layout_marginTop="20dp"
-            />
+            android:gravity="center"
+            android:layout_gravity="center">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/first_name"/>
+            <EditText
+                android:id="@+id/first_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:hint="@string/first_name"
+                android:inputType="textCapSentences|textAutoCorrect" />
+        </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:layout_gravity="center">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/last_name"/>
+            <EditText
+                android:id="@+id/last_name"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:hint="@string/last_name"
+                android:inputType="textCapSentences|textAutoCorrect"
+                />
+        </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:layout_gravity="center">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/street"/>
         <EditText
             android:id="@+id/street"
             android:layout_width="300dp"
@@ -69,9 +103,20 @@
             android:layout_gravity="center"
             android:hint="@string/street"
             android:inputType="textCapSentences|textAutoCorrect"
-            android:layout_marginTop="20dp"
             />
+    </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:layout_gravity="center">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/city"/>
         <EditText
             android:id="@+id/city"
             android:layout_width="300dp"
@@ -80,9 +125,20 @@
             android:layout_gravity="center"
             android:hint="@string/city"
             android:inputType="textCapSentences|textAutoCorrect"
-            android:layout_marginTop="20dp"
             />
+    </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:layout_gravity="center">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/state"/>
         <EditText
             android:id="@+id/state"
             android:layout_width="300dp"
@@ -91,9 +147,20 @@
             android:layout_gravity="center"
             android:hint="@string/state"
             android:inputType="textCapCharacters"
-            android:layout_marginTop="20dp"
             />
+    </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:layout_gravity="center">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/zip_code"/>
         <EditText
             android:id="@+id/zip_code"
             android:layout_width="300dp"
@@ -102,9 +169,20 @@
             android:layout_gravity="center"
             android:hint="@string/zip_code"
             android:inputType="number"
-            android:layout_marginTop="20dp"
             />
+    </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:layout_gravity="center">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/county"/>
         <EditText
             android:id="@+id/county"
             android:layout_width="300dp"
@@ -113,8 +191,8 @@
             android:layout_gravity="center"
             android:hint="@string/county"
             android:inputType="textCapSentences|textAutoCorrect"
-            android:layout_marginTop="20dp"
             />
+    </LinearLayout>
 
         <Button
             android:id="@+id/save_and_update_button"
