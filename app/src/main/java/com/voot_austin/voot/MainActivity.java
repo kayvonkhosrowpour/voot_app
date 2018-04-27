@@ -1,12 +1,9 @@
 package com.voot_austin.voot;
 
-import android.arch.persistence.room.Room;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatDelegate;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -24,7 +21,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.concurrent.Callable;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,9 +29,6 @@ public class MainActivity extends AppCompatActivity {
     // voot user information
     private VootUser vootUser;
     private static final String VOOT_USER = "vootUser";
-
-    // local database
-    //private AppDatabase db;
 
     // UI Elements
     private TextView userGreeting;
@@ -50,10 +43,6 @@ public class MainActivity extends AppCompatActivity {
 
         // DO NOT REMOVE: set theme of entire app, once
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-
-        // initialize local database
-//        db = Room.databaseBuilder(getApplicationContext(),
-//                AppDatabase.class, "app-database").build();
 
         // Initialize Firebase
         FirebaseApp.initializeApp(this);
@@ -78,21 +67,6 @@ public class MainActivity extends AppCompatActivity {
 
         // build UI for navigation TODO: change this to something pretty
         initButtons();
-
-//
-//        Callable<Void> testCall = new Callable<Void>(){
-//
-//            @Override
-//            public Void call() throws Exception {
-//                Toast.makeText(getApplicationContext(), "HELLO!", Toast.LENGTH_LONG).show();
-//                return null;
-//            }
-//        };
-//
-//        // TEST
-//        new RetrieveDbAsync(db, testCall).execute();
-
-
 
     }
 
@@ -134,11 +108,8 @@ public class MainActivity extends AppCompatActivity {
 
                     if (receivedVootUser != null) {
 
-                        //db.userDao().insertAll(receivedVootUser); // cannot be done on main thread
-                        //new PopulateDbAsync(db).execute(receivedVootUser);
                         userGreeting.setText(String.format("Hello, %s", receivedVootUser.firstname));
                         location.setText(String.format(" %s, %s %s", receivedVootUser.city, receivedVootUser.state, receivedVootUser.zipcode));
-                        // Toast.makeText(getApplicationContext(), "BONK!", Toast.LENGTH_LONG).show();
                         vootUser = receivedVootUser;
 
                     } else {
