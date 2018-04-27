@@ -8,7 +8,7 @@
     <string name="Location">Location:</string>
     <string name="location_placeholder">Austin, TX 78705</string>
     <string name="Representatives">Representatives</string>
-    <string name="Poll_Locations">Poll Locations</string>
+    <string name="Poll_Location">Poll Location</string>
     <string name="Upcoming_Elections">Upcoming Elections</string>
     <string name="Reminders">Reminders</string>
     <string name="user_name_placeholder">John Smith</string>
@@ -31,7 +31,7 @@
     <string name="email_body">Hello, I am one of your constituents and have some questions for you...</string>
 
     <!--  Poll Locations Activity Strings -->
-    <string name="poll_locations">Poll Locations</string>
+    <string name="poll_location">Poll Location</string>
 
     <!-- Upcoming Elections Activity Strings -->
     <string name="upcoming_elections">Upcoming Elections</string>
@@ -77,5 +77,6 @@
     <string name="passwords_do_not_match">Passwords do not match</string>
     <string name="address_invalid">Address is invalid</string>
     <string name="please_enter_all_fields">Please enter all fields</string>
+    <string name="loading">Loading...</string>
 
 </resources>

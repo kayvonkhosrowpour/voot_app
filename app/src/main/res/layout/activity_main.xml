@@ -40,7 +40,7 @@
         android:id="@+id/poll_locations_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/Poll_Locations"/>
+        android:text="@string/Poll_Location"/>
 
     <Button
         android:id="@+id/reminders_button"

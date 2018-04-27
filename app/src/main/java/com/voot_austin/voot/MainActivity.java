@@ -137,6 +137,8 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.poll_locations_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Toast.makeText(getApplicationContext(), getString(R.string.loading), Toast.LENGTH_LONG).show();
+
                 Intent intent = new Intent(getApplicationContext(), PollLocationActivity.class);
                 startActivity(intent);
             }

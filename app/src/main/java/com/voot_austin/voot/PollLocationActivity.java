@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -66,7 +67,6 @@ public class PollLocationActivity extends AppCompatActivity implements OnMapRead
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_poll_location);
 
-        //getSupportActionBar().setTitle("Poll Locations");
         FirebaseApp.initializeApp(getApplicationContext());
 
         firebaseAuth = FirebaseAuth.getInstance();
@@ -91,9 +91,9 @@ public class PollLocationActivity extends AppCompatActivity implements OnMapRead
      */
     @Override
     public void onMapReady(GoogleMap map) {
-        //map.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
-        map.addMarker(new MarkerOptions().position(new LatLng(lati, longi)).title(resp.get(0)).snippet(addSnippet));
-
+        LatLng point = new LatLng(lati, longi);
+        map.addMarker(new MarkerOptions().position(point).title(resp.get(0)).snippet(addSnippet));
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(point, 14));
     }
 
     public void retrieveFirebaseEntries() {

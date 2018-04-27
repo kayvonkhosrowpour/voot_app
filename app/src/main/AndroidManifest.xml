@@ -37,7 +37,7 @@
         <!-- Sub activities of Main Activity -->
         <activity
             android:name=".PollLocationActivity"
-            android:label="@string/Poll_Locations">
+            android:label="@string/Poll_Location">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
