@@ -65,7 +65,8 @@
         <activity
             android:name=".RepresentativesActivity"
             android:label="@string/Your_Representatives"
-            android:launchMode="singleTop">
+            android:launchMode="singleTop"
+            android:windowSoftInputMode="stateHidden">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
