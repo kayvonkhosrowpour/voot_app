@@ -87,8 +87,9 @@ public class RemindersActivity extends AppCompatActivity {
 
                     } else {
                         Toast.makeText(getApplicationContext(), "Please log in", Toast.LENGTH_SHORT).show();
-                        finish();
                     }
+
+                    finish();
 
                 }
 
