@@ -89,26 +89,6 @@ public class MainActivity extends AppCompatActivity {
             String userEntry = String.format("%s/%s", DatabaseRefs.USERS_TABLE, currentUser.getUid());
             DatabaseReference userEntryRef = FirebaseDatabase.getInstance().getReference(userEntry);
 
-            userEntryRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    VootUser vootUser = dataSnapshot.getValue(VootUser.class);
-
-                    if (vootUser != null) {
-                        userGreeting.setText(String.format("Hello, %s", vootUser.firstname));
-                        location.setText(String.format("%s, %s, %s, %s",
-                                vootUser.street, vootUser.city, vootUser.state, vootUser.zipcode));
-                    } else {
-                        throw new NullPointerException("Voot user was found to be null!");
-                    }
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                    throw new IllegalStateException(" In Main activity, could not retrieve user data.");
-                }
-            });
-
             userEntryRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -116,8 +96,7 @@ public class MainActivity extends AppCompatActivity {
 
                     if (vootUser != null) {
                         userGreeting.setText(String.format("Hello, %s", vootUser.firstname));
-                        location.setText(String.format("%s, %s, %s, %s",
-                                vootUser.street, vootUser.city, vootUser.state, vootUser.zipcode));
+                        location.setText(String.format(" %s, %s%s", vootUser.city, vootUser.state, vootUser.zipcode));
                     } else {
                         throw new NullPointerException("Voot user was found to be null!");
                     }

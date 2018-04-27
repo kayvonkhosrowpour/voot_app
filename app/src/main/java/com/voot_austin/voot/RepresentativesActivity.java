@@ -41,6 +41,7 @@ public class RepresentativesActivity extends AppCompatActivity {
     FragmentManager fragmentManager;
 
     EditText userAddress, userCityState, userZipCode;
+    TextView location;
     Button sendRequest;
 
     String apiKey = "AIzaSyDavSOAQc_B7Gaaj8cnL6EmPG2g9vgwlVU";
@@ -66,6 +67,7 @@ public class RepresentativesActivity extends AppCompatActivity {
         sendRequest = findViewById(R.id.rep_btn);
         userCityState = findViewById(R.id.city);
         userZipCode = findViewById(R.id.zipcode);
+        location = findViewById(R.id.location);
 
         retrieveFirebaseEntries();
 
@@ -92,6 +94,8 @@ public class RepresentativesActivity extends AppCompatActivity {
                         userAddress.setText(vootUser.street);
                         userCityState.setText(String.format("%s, %s", vootUser.city, vootUser.state));
                         userZipCode.setText(vootUser.zipcode);
+                        location.setText(String.format("%s, %s %s",
+                                vootUser.city, vootUser.state, vootUser.zipcode));
                     } else {
                         throw new NullPointerException("Voot user was found to be null!");
                     }

@@ -15,6 +15,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.lang.reflect.Array;
@@ -33,6 +41,7 @@ public class ViewRepresentativesActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
+    private TextView location;
 
     // data
     private List<Representative> repData;
@@ -43,10 +52,14 @@ public class ViewRepresentativesActivity extends AppCompatActivity {
         // inflate view
         setContentView(R.layout.fragment_rep_list);
 
-        //Toast.makeText(getApplicationContext(), "OnCreateCalled", Toast.LENGTH_LONG).show();
+        // initialize Firebase instance for this activity
+        FirebaseApp.initializeApp(getApplicationContext());
 
         // inflate Recycler View
         recyclerView = findViewById(R.id.representatives_recycler_view);
+
+        // inflate TextView
+        location = findViewById(R.id.location);
 
         // improves performance because changes
         // in content do not change layout size
@@ -68,6 +81,43 @@ public class ViewRepresentativesActivity extends AppCompatActivity {
         // Set Adapter for View
         adapter = new RepresentativeAdapter(repData);
         recyclerView.setAdapter(adapter);
+
+        retrieveFirebaseEntries();
+    }
+
+    // retrieve the address information from the user profile
+    public void retrieveFirebaseEntries() {
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (user == null) {
+            finish();
+        } else {
+            // get reference to table to store user information
+            String userEntry = String.format("%s/%s", DatabaseRefs.USERS_TABLE, user.getUid());
+            DatabaseReference userEntryRef = FirebaseDatabase.getInstance().getReference(userEntry);
+
+            userEntryRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    VootUser vootUser = dataSnapshot.getValue(VootUser.class);
+
+                    if (vootUser != null) {
+                        location.setText(String.format("%s, %s %s",
+                                vootUser.city, vootUser.state, vootUser.zipcode));
+                    } else {
+                        throw new NullPointerException("Voot user was found to be null!");
+                    }
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    throw new IllegalStateException("In Main Activity, could not retrieve user data");
+                }
+            });
+        }
+
     }
 
     private class RepresentativeAdapter extends RecyclerView.Adapter<RepresentativeAdapter.RepViewHolder> {

@@ -81,8 +81,8 @@ public class ContactRepActivity extends AppCompatActivity {
                     VootUser vootUser = dataSnapshot.getValue(VootUser.class);
 
                     if (vootUser != null) {
-                        userLocation.setText(String.format("%s, %s, %s, %s",
-                                vootUser.street, vootUser.city, vootUser.state, vootUser.zipcode));
+                        userLocation.setText(String.format("%s, %s %s",
+                                vootUser.city, vootUser.state, vootUser.zipcode));
                     } else {
                         throw new NullPointerException("Voot user was found to be null!");
                     }
@@ -104,8 +104,8 @@ public class ContactRepActivity extends AppCompatActivity {
     private void updateGUI() {
 
         // set name
-        char partyAbbreviation = representative.getParty().toLowerCase().charAt(0);
-        if (partyAbbreviation != 'u' ) // unknown party
+        char partyAbbreviation = representative.getParty().toUpperCase().charAt(0);
+        if (partyAbbreviation != 'U' ) // unknown party
             repName.setText(String.format("%s (%c)", representative.getName(), partyAbbreviation));
         else
             repName.setText(String.format("%s", representative.getName()));
