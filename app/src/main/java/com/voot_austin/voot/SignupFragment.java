@@ -187,8 +187,11 @@ public class SignupFragment extends Fragment {
         for (EditText editText : editTextEntries)
             if (editText == null)
                 throw new NullPointerException("One of the edit texts was null");
-            else if (editText.getText().toString().trim().matches(""))
+            else if (editText.getText().toString().trim().matches("")) {
+                Toast.makeText(getContext(), getString(R.string.please_enter_all_fields), Toast.LENGTH_SHORT).show();
                 return null;
+            }
+
 
         // Map to return
         Map<EditText, String> entryMap = new HashMap<>();

@@ -76,5 +76,6 @@
     <string name="must_contain_at_least_1_special_char">Password must contain at least 1 special character.</string>
     <string name="passwords_do_not_match">Passwords do not match</string>
     <string name="address_invalid">Address is invalid</string>
+    <string name="please_enter_all_fields">Please enter all fields</string>
 
 </resources>
