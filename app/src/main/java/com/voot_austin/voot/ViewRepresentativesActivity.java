@@ -43,7 +43,7 @@ public class ViewRepresentativesActivity extends AppCompatActivity {
         // inflate view
         setContentView(R.layout.fragment_rep_list);
 
-        Toast.makeText(getApplicationContext(), "OnCreateCalled", Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(), "OnCreateCalled", Toast.LENGTH_LONG).show();
 
         // inflate Recycler View
         recyclerView = findViewById(R.id.representatives_recycler_view);
