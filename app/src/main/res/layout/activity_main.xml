@@ -9,43 +9,72 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:maxHeight="120dp"
+        android:layout_height="150dp"
+        android:maxHeight="100dp"
         android:minWidth="200dp"
+        android:layout_marginTop="25dp"
         android:src="@drawable/voot_header"
         android:layout_gravity="center"
-        android:contentDescription="header"/>
+        android:contentDescription="@string/header"/>
 
     <TextView
         android:id="@+id/user_greeting"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginTop="20dp"
         android:gravity="center"
         android:text="@string/user_name_placeholder"/>
 
     <include layout="@layout/location_layout"/>
 
-    <Button
-        android:id="@+id/representatives_button"
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:text="@string/Representatives"/>
-    <Button
-        android:id="@+id/elections_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/Upcoming_Elections"/>
-    <Button
-        android:id="@+id/poll_locations_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/Poll_Location"/>
+        android:layout_gravity="center_horizontal"
+        android:orientation="vertical"
+        android:layout_marginTop="10dp">
+        <Button
+            android:id="@+id/representatives_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:padding="10dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/Representatives"
+            android:background="@color/colorAccent"/>
+        <Button
+            android:id="@+id/elections_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:padding="10dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/Upcoming_Elections"
+            android:background="@color/colorAccent"/>
+        <Button
+            android:id="@+id/poll_locations_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:padding="10dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/Poll_Location"
+            android:background="@color/colorAccent"/>
 
-    <Button
-        android:id="@+id/reminders_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/Reminders"/>
+        <Button
+            android:id="@+id/reminders_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:padding="10dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/Reminders"
+            android:background="@color/colorAccent"/>
+    </LinearLayout>
 
 </LinearLayout>

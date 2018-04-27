@@ -19,7 +19,7 @@
         android:id="@+id/elections_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#d9dde0"
+        android:background="@null"
         android:scrollbars="vertical" />
 
 </LinearLayout>

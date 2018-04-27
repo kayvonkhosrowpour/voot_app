@@ -12,6 +12,7 @@
     <string name="Upcoming_Elections">Upcoming Elections</string>
     <string name="Reminders">Reminders</string>
     <string name="user_name_placeholder">John Smith</string>
+    <string name="header">header</string>
 
     <!-- Representatives Activity Strings -->
     <string name="Your_Representatives">Your Representatives</string>
