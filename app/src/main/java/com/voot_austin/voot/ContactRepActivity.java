@@ -7,6 +7,9 @@ import android.net.Uri;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.Spanned;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -116,6 +119,16 @@ public class ContactRepActivity extends AppCompatActivity {
             portrait.setImageResource(R.drawable.default_portrait);
         } else {
             Picasso.with(getApplicationContext()).load(representative.getPhotoURL()).into(portrait);
+            portrait.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent();
+                    intent.setAction(Intent.ACTION_VIEW);
+                    intent.addCategory(Intent.CATEGORY_BROWSABLE);
+                    intent.setData(Uri.parse(representative.getWebsite()));
+                    startActivity(intent);
+                }
+            });
         }
 
         // set rep info
@@ -161,8 +174,6 @@ public class ContactRepActivity extends AppCompatActivity {
         StringBuilder builder = new StringBuilder();
         builder.append(representative.getParty()).append('\n');
         builder.append(representative.getOffice()).append('\n');
-        builder.append(representative.getWebsite()).append('\n');
-
         repInfo.setText(builder.toString());
 
     }

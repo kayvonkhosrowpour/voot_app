@@ -29,6 +29,7 @@
     <string name="email">Email</string>
     <string name="subject">Message from Voot User</string>
     <string name="email_body">Hello, I am one of your constituents and have some questions for you...</string>
+    <string name="website">Website</string>
 
     <!--  Poll Locations Activity Strings -->
     <string name="poll_location">Poll Location</string>

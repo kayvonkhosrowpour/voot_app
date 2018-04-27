@@ -267,11 +267,6 @@ public class SignupFragment extends Fragment {
             entryMap.put(state, state_str);
         } else {
 
-            Log.d("DEBUGSON", String.format("\n\n\n\n\n\n%b, %b, %b, %b, %b", street_str.matches("[a-zA-Z\\s0-9]*"), city_str.matches("[a-zA-Z]*"),
-                    county_str.matches("[a-zA-Z]*"),
-                    zipCode_str.matches("[0-9]{5,6}"),
-                    state_str.matches("[a-zA-Z]{2,}")));
-
             Toast.makeText(getActivity(), getString(R.string.address_invalid), Toast.LENGTH_SHORT).show();
             return null;
         }
