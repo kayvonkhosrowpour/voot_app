@@ -114,7 +114,7 @@ public class ElectionsActivity extends AppCompatActivity {
             updateVarsError();
         }
     }
-    
+
     private class GetUrlContentTask extends AsyncTask<String, Integer, String> {
         protected String doInBackground(String... urls) {
             String content = "";
