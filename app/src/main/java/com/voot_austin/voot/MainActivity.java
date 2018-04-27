@@ -1,6 +1,8 @@
 package com.voot_austin.voot;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatDelegate;
@@ -21,6 +23,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
     // voot user information
     private VootUser vootUser;
-    private static final String VOOT_USER = "vootUser";
+    public static final String VOOT_USER = "vootUser";
 
     // UI Elements
     private TextView userGreeting;
@@ -49,15 +54,9 @@ public class MainActivity extends AppCompatActivity {
 
         getUIElements();
 
-        // set UI if values already exist
-        if (savedInstanceState != null) {
-            Object pojo = savedInstanceState.get(VOOT_USER);
-            if (pojo != null && pojo instanceof VootUser) {
-                VootUser vootUser = (VootUser) pojo;
-                userGreeting.setText(String.format("Hello, %s", vootUser.firstname));
-                location.setText(String.format(" %s, %s%s", vootUser.city, vootUser.state, vootUser.zipcode));
-            }
-        }
+        // load shared preferences and display them
+        this.vootUser = VootUserFetcher.loadSharedPreferences(this);
+        updateFields();
 
         // connect to firebase
         firebaseAuth = FirebaseAuth.getInstance();
@@ -69,6 +68,17 @@ public class MainActivity extends AppCompatActivity {
         initButtons();
 
     }
+
+    // update fields
+    private void updateFields() {
+
+        if (this.vootUser == null)
+            throw new IllegalStateException("Voot user was null, couldn't update fields");
+
+        this.userGreeting.setText(String.format("Hello, %s", vootUser.firstname));
+        this.location.setText(String.format(" %s, %s %s", vootUser.city, vootUser.state, vootUser.zipcode));
+    }
+
 
     // get the UI elements from XML
     private void getUIElements() {
@@ -108,9 +118,10 @@ public class MainActivity extends AppCompatActivity {
 
                     if (receivedVootUser != null) {
 
-                        userGreeting.setText(String.format("Hello, %s", receivedVootUser.firstname));
-                        location.setText(String.format(" %s, %s %s", receivedVootUser.city, receivedVootUser.state, receivedVootUser.zipcode));
                         vootUser = receivedVootUser;
+                        VootUserFetcher.saveSharedPreferences(getApplicationContext(), vootUser);
+                        updateFields();
+                        Log.d("POJO", "Set voot user");
 
                     } else {
                         throw new NullPointerException("Voot user was found to be null!");
@@ -154,7 +165,12 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Toast.makeText(getApplicationContext(), getString(R.string.loading), Toast.LENGTH_LONG).show();
 
+                // send voot user
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(VOOT_USER, vootUser);
+
                 Intent intent = new Intent(getApplicationContext(), PollLocationActivity.class);
+                intent.putExtras(bundle);
                 startActivity(intent);
             }
         });
@@ -203,16 +219,6 @@ public class MainActivity extends AppCompatActivity {
     private void launchSignOutRequest() {
         FirebaseAuth.getInstance().signOut();
         recreate();
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        super.onSaveInstanceState(savedInstanceState);
-        // Save UI state changes to the savedInstanceState.
-        // This bundle will be passed to onCreate if the process is
-        // killed and restarted.
-        savedInstanceState.putSerializable(VOOT_USER, vootUser);
-        // etc.
     }
 
 }

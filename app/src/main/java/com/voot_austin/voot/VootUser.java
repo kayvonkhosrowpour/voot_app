@@ -12,38 +12,47 @@ public class VootUser implements Serializable {
     @SerializedName("firstname")
     @Expose
     public String firstname;
+    public final static String firstname_ref = "firstname";
 
     @SerializedName("lastname")
     @Expose
     public String lastname;
+    public final static String  lastname_ref = "lastname";
 
     @SerializedName("email")
     @Expose
     public String email;
+    public final static String email_ref = "email";
 
     @SerializedName("street")
     @Expose
     public String street;
+    public final static String street_ref = "street";
 
     @SerializedName("city")
     @Expose
     public String city;
+    public final static String city_ref = "city";
 
     @SerializedName("county")
     @Expose
     public String county;
+    public final static String county_ref = "county";
 
     @SerializedName("state")
     @Expose
     public String state;
+    public final static String state_ref = "state";
 
     @SerializedName("zipcode")
     @Expose
     public String zipcode;
+    public final static String zipcode_ref = "zipcode";
 
     @SerializedName("electionReminders")
     @Expose
     public Boolean electionReminders;
+    public final static String electionReminders_ref = "electionReminders";
 
     public VootUser() {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
@@ -132,4 +141,8 @@ public class VootUser implements Serializable {
     public void setElectionReminders(Boolean electionReminders) {
         this.electionReminders = electionReminders;
     }
+
+    @Override
+    public String toString() {
+        return String.format("%s,%s,%s,%s,%s,%s,%s,%s,%s", firstname, lastname, email, street, city, street, zipcode, county, electionReminders.toString());    }
 }

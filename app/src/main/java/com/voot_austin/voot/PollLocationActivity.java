@@ -1,10 +1,12 @@
 package com.voot_austin.voot;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -33,6 +35,8 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class PollLocationActivity extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -57,10 +61,7 @@ public class PollLocationActivity extends AppCompatActivity implements OnMapRead
 
     private FirebaseAuth firebaseAuth;
 
-    String street;
-    String city;
-    String state;
-    String zipcode;
+    private VootUser vootUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,12 +72,7 @@ public class PollLocationActivity extends AppCompatActivity implements OnMapRead
 
         firebaseAuth = FirebaseAuth.getInstance();
 
-        retrieveFirebaseEntries();
-
-        street = "4600 Elmont Dr";
-        city = "Austin";
-        state = "TX";
-        zipcode = "78741";
+        vootUser = VootUserFetcher.loadSharedPreferences(this);
 
         createMarker();
 
@@ -94,67 +90,6 @@ public class PollLocationActivity extends AppCompatActivity implements OnMapRead
         LatLng point = new LatLng(lati, longi);
         map.addMarker(new MarkerOptions().position(point).title(resp.get(0)).snippet(addSnippet));
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(point, 14));
-    }
-
-    public void retrieveFirebaseEntries() {
-
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-        if (user == null) {
-            finish();
-        } else {
-            // get reference to table to store user information
-            String userEntry = String.format("%s/%s", DatabaseRefs.USERS_TABLE, user.getUid());
-            DatabaseReference userEntryRef = FirebaseDatabase.getInstance().getReference(userEntry);
-
-            userEntryRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    VootUser vootUser = dataSnapshot.getValue(VootUser.class);
-
-                    if (vootUser != null) {
-                        street = vootUser.street;
-                        city = vootUser.city;
-                        state = vootUser.state;
-                        zipcode = vootUser.zipcode;
-
-                        createMarker();
-                    } else {
-                        throw new NullPointerException("Voot user was found to be null!");
-                    }
-
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                    throw new IllegalStateException("In Poll Activity, could not retrieve user data");
-                }
-            });
-
-            userEntryRef.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    VootUser vootUser = dataSnapshot.getValue(VootUser.class);
-                    if(vootUser != null) {
-                        street = vootUser.street;
-                        city = vootUser.city;
-                        state = vootUser.state;
-                        zipcode = vootUser.zipcode;
-
-                        createMarker();
-                    }
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                    throw new IllegalStateException("In Poll Activity, could not retrieve user data");
-                }
-            });
-
-
-
-        }
-
     }
 
     public void extractAddVars(String data) {
@@ -271,8 +206,8 @@ public class PollLocationActivity extends AppCompatActivity implements OnMapRead
         resp.clear();
 
 
-        String[] strSplit = street.split(" ");
-        String[] ctySplit = city.split(" ");
+        String[] strSplit = vootUser.street.split(" ");
+        String[] ctySplit = vootUser.city.split(" ");
 
         int i;
         for(i = 0; i < strSplit.length; i++) {
@@ -283,9 +218,9 @@ public class PollLocationActivity extends AppCompatActivity implements OnMapRead
             RU2 = RU2 + ctySplit[i];
             RU2 = RU2 + "%20";
         }
-        RU2 = RU2 + state;
+        RU2 = RU2 + vootUser.state;
         RU2 = RU2 + "%20";
-        RU2 = RU2 + zipcode;
+        RU2 = RU2 + vootUser.zipcode;
 
         String RU1 = "https://www.googleapis.com/civicinfo/v2/voterinfo?key=AIzaSyDavSOAQc_B7Gaaj8cnL6EmPG2g9vgwlVU&address=";
         //"4600%20Elmont%20Dr.%20Austin%20TX"
