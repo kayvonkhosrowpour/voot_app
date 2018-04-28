@@ -47,6 +47,9 @@ public class ElectionsActivity extends AppCompatActivity {
     List<String> stringContests = new ArrayList<String>();
     Integer numOfContests;
 
+    // Voot user to store information for elections
+    VootUser vootUser;
+
     String street;
     String city;
     String state;
@@ -57,28 +60,34 @@ public class ElectionsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_elections);
 
-        //retrieveFirebaseEntries();
-        String RU2 = "";
+        // retrieve local voot user
+        vootUser = VootUserFetcher.loadSharedPreferences(this);
 
-        /* String[] stArr = street.split(" ");
-        String[] cityArr = city.split(" ");
+        // setup on change for voot user
+        retrieveFirebaseEntries();
 
-        int i;
-
-        for(i = 0; i < stArr.length; i++) {
-            RU2 += stArr[i];
-            RU2 += "%20";
-        }
-
-        for(i = 0; i < cityArr.length; i++) {
-            RU2 += cityArr[i];
-            RU2 += "%20";
-        }
-
-        RU2 += state; */
+        // setup strings for API call
+//        String RU2 = "";
+//
+//        String[] stArr = street.split(" ");
+//        String[] cityArr = city.split(" ");
+//
+//        int i;
+//
+//        for(i = 0; i < stArr.length; i++) {
+//            RU2 += stArr[i];
+//            RU2 += "%20";
+//        }
+//
+//        for(i = 0; i < cityArr.length; i++) {
+//            RU2 += cityArr[i];
+//            RU2 += "%20";
+//        }
+//
+//        RU2 += state;
 
         String RU1 = "https://www.googleapis.com/civicinfo/v2/voterinfo?key=AIzaSyDavSOAQc_B7Gaaj8cnL6EmPG2g9vgwlVU&address=";
-        RU2 =        "4600%20Elmont%20Dr.%20Austin%20TX";
+        String RU2 =        "4600%20Elmont%20Dr.%20Austin%20TX";
         String RU3 = "&electionId=2000";
 
         String requestURL = RU1 + RU2 + RU3;
@@ -176,37 +185,17 @@ public class ElectionsActivity extends AppCompatActivity {
             String userEntry = String.format("%s/%s", DatabaseRefs.USERS_TABLE, user.getUid());
             DatabaseReference userEntryRef = FirebaseDatabase.getInstance().getReference(userEntry);
 
-            userEntryRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    VootUser vootUser = dataSnapshot.getValue(VootUser.class);
-
-                    if (vootUser != null) {
-                        street = vootUser.street;
-                        city = vootUser.city;
-                        state = vootUser.state;
-                        zipcode = vootUser.zipcode;
-                    } else {
-                        throw new NullPointerException("Voot user was found to be null!");
-                    }
-
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                    throw new IllegalStateException("In Poll Activity, could not retrieve user data");
-                }
-            });
-
             userEntryRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    VootUser vootUser = dataSnapshot.getValue(VootUser.class);
-                    if(vootUser != null) {
+                    VootUser receivedVootUser = dataSnapshot.getValue(VootUser.class);
+                    if (receivedVootUser != null) {
+                        vootUser = receivedVootUser;
+                        VootUserFetcher.saveSharedPreferences(getApplicationContext(), vootUser);
                         street = vootUser.street;
                         city = vootUser.city;
-                        state = vootUser.state;
                         zipcode = vootUser.zipcode;
+                        state = vootUser.state;
                     }
                 }
 
@@ -215,8 +204,6 @@ public class ElectionsActivity extends AppCompatActivity {
                     throw new IllegalStateException("In Poll Activity, could not retrieve user data");
                 }
             });
-
-
 
         }
 

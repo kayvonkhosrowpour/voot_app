@@ -20,18 +20,28 @@ import java.util.List;
 
 public class ViewElectionsActivity extends AppCompatActivity {
 
+    private TextView location;
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private List<Election> elecData;
+
+    private VootUser vootUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_elec_list); // assign XML file
 
+        // get voot user
+        vootUser = VootUserFetcher.loadSharedPreferences(this);
+
         // Instantiate Recycler View
         recyclerView = findViewById(R.id.elections_recycler_view);
+        location = findViewById(R.id.location);
+
+        // set location
+        location.setText(String.format(" %s, %s %s", vootUser.city, vootUser.state, vootUser.zipcode));
 
         // improves performance because changes
         // in content do not change layout size

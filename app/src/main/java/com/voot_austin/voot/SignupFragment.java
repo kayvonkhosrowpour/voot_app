@@ -151,6 +151,9 @@ public class SignupFragment extends Fragment {
                                             // build child
                                             usersRef.child(user.getUid()).setValue(vootUser);
 
+                                            // place locally
+                                            VootUserFetcher.saveSharedPreferences(getContext(), vootUser);
+
                                             // done, exit get user activity
                                             getActivity().finish();
 

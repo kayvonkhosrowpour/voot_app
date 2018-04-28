@@ -48,6 +48,7 @@ public class RepresentativesActivity extends AppCompatActivity {
     String address = ""; // "2900%20Hawks%20Swoop%20Trail%20Pflugerville,%20TX%2078660";
     String requestURL = String.format("https://www.googleapis.com/civicinfo/v2/representatives?key=%s&address=%s", apiKey, address);
 
+    private VootUser vootUser;
 
     // API Key : AIzaSyDavSOAQc_B7Gaaj8cnL6EmPG2g9vgwlVU
 
@@ -69,8 +70,21 @@ public class RepresentativesActivity extends AppCompatActivity {
         userZipCode = findViewById(R.id.zipcode);
         location = findViewById(R.id.location);
 
+        // update UI using locally stored vootUser
+        vootUser = VootUserFetcher.loadSharedPreferences(this);
+        updateUI(vootUser);
+
+        // setup on change in case vootUser changes
         retrieveFirebaseEntries();
 
+    }
+
+    private void updateUI(VootUser vootUser) {
+        userAddress.setText(vootUser.street);
+        userCityState.setText(String.format("%s, %s", vootUser.city, vootUser.state));
+        userZipCode.setText(vootUser.zipcode);
+        location.setText(String.format("%s, %s %s",
+                vootUser.city, vootUser.state, vootUser.zipcode));
     }
 
     // retrieve the address information from the user profile
@@ -88,14 +102,12 @@ public class RepresentativesActivity extends AppCompatActivity {
             userEntryRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    VootUser vootUser = dataSnapshot.getValue(VootUser.class);
+                    VootUser receivedVootUser = dataSnapshot.getValue(VootUser.class);
 
-                    if (vootUser != null) {
-                        userAddress.setText(vootUser.street);
-                        userCityState.setText(String.format("%s, %s", vootUser.city, vootUser.state));
-                        userZipCode.setText(vootUser.zipcode);
-                        location.setText(String.format("%s, %s %s",
-                                vootUser.city, vootUser.state, vootUser.zipcode));
+                    if (receivedVootUser != null) {
+                        vootUser = receivedVootUser;
+                        VootUserFetcher.saveSharedPreferences(getApplicationContext(), vootUser);
+                        updateUI(vootUser);
                     } else {
                         throw new NullPointerException("Voot user was found to be null!");
                     }

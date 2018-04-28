@@ -45,6 +45,7 @@ public class ViewRepresentativesActivity extends AppCompatActivity {
 
     // data
     private List<Representative> repData;
+    private VootUser vootUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,15 +75,28 @@ public class ViewRepresentativesActivity extends AppCompatActivity {
         if (bundle != null && repData == null)
             repData = ((List<Representative>) bundle.getSerializable("representatives"));
 
-        if (repData == null) {
+
+        if (repData == null)
             throw new NullPointerException("Representative Data is null!");
-        }
 
         // Set Adapter for View
         adapter = new RepresentativeAdapter(repData);
         recyclerView.setAdapter(adapter);
 
+        // update UI using locally stored vootUser
+        vootUser = VootUserFetcher.loadSharedPreferences(this);
+        updateUI(vootUser);
+
+        // setup on change in case vootUser changes
         retrieveFirebaseEntries();
+
+    }
+
+    private void updateUI(VootUser vootUser) {
+
+        location.setText(String.format("%s, %s %s",
+                vootUser.city, vootUser.state, vootUser.zipcode));
+
     }
 
     // retrieve the address information from the user profile
@@ -100,11 +114,12 @@ public class ViewRepresentativesActivity extends AppCompatActivity {
             userEntryRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    VootUser vootUser = dataSnapshot.getValue(VootUser.class);
+                    VootUser receivedVootUser = dataSnapshot.getValue(VootUser.class);
 
-                    if (vootUser != null) {
-                        location.setText(String.format("%s, %s %s",
-                                vootUser.city, vootUser.state, vootUser.zipcode));
+                    if (receivedVootUser != null) {
+                        vootUser = receivedVootUser;
+                        VootUserFetcher.saveSharedPreferences(getApplicationContext(), vootUser);
+                        updateUI(vootUser);
                     } else {
                         throw new NullPointerException("Voot user was found to be null!");
                     }
