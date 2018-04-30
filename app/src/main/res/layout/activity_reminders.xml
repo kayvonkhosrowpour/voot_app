@@ -8,6 +8,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <!--
         <TextView
             android:textSize="20sp"
             android:gravity="center"
@@ -31,6 +32,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/upcoming_election_reminders"/>
         </LinearLayout>
+        -->
 
         <TextView
             android:textSize="20sp"

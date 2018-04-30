@@ -33,7 +33,7 @@ import static android.content.ContentValues.TAG;
 // on 3/26/18
 public class SignupFragment extends Fragment {
 
-    private CheckBox electionReminders;
+    //private CheckBox electionReminders;
     private EditText userEmail, userPassword, confirmPassword, firstName,
                      lastName, street, city, zipCode, county, state;
     private ArrayList<EditText> editTextEntries;
@@ -93,7 +93,7 @@ public class SignupFragment extends Fragment {
         editTextEntries.add(zipCode = signupView.findViewById(R.id.zip_code));
         editTextEntries.add(county = signupView.findViewById(R.id.county));
         editTextEntries.add(state = signupView.findViewById(R.id.state));
-        electionReminders = signupView.findViewById(R.id.upcoming_election_reminders_checkbox);
+        //electionReminders = signupView.findViewById(R.id.upcoming_election_reminders_checkbox);
 
         Button signUpButton = signupView.findViewById(R.id.sign_up_button);
 
@@ -146,7 +146,8 @@ public class SignupFragment extends Fragment {
                                                     entryMap.get(county),
                                                     entryMap.get(state),
                                                     entryMap.get(zipCode),
-                                                    electionReminders.isChecked());
+                                                    //electionReminders.isChecked());
+                                                    false);
 
                                             // build child
                                             usersRef.child(user.getUid()).setValue(vootUser);

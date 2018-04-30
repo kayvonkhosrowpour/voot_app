@@ -33,23 +33,41 @@ import static android.content.ContentValues.TAG;
 
 public class RemindersActivity extends AppCompatActivity {
 
-    private CheckBox electionReminders;
+    //private CheckBox electionReminders;
     private EditText firstName, lastName, street, city, zipCode, county, state;
     private ArrayList<EditText> editTextEntries;
+
+    private VootUser vootUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reminders);
 
+        retrieveGUI();
+
+        // retrieve local voot user information for synchronicity
+        vootUser = VootUserFetcher.loadSharedPreferences(this);
+        updateUI();
+
         // retrieve Firebase instance
         FirebaseApp.initializeApp(this);
-
-        retrieveGUI();
         retrieveFirebaseEntries();
 
         setOnClick();
 
+    }
+
+    // update the UI synchronously
+    private void updateUI() {
+        //electionReminders.setChecked(vootUser.electionReminders);
+        firstName.setText(vootUser.firstname);
+        lastName.setText(vootUser.lastname);
+        street.setText(vootUser.street);
+        city.setText(vootUser.city);
+        state.setText(vootUser.state);
+        county.setText(vootUser.county);
+        zipCode.setText(vootUser.zipcode);
     }
 
     // set the on click of button to update user in database
@@ -103,7 +121,7 @@ public class RemindersActivity extends AppCompatActivity {
 
         editTextEntries = new ArrayList<>();
 
-        electionReminders = findViewById(R.id.upcoming_election_reminders_checkbox);
+        //electionReminders = findViewById(R.id.upcoming_election_reminders_checkbox);
         editTextEntries.add(firstName = findViewById(R.id.first_name));
         editTextEntries.add(lastName = findViewById(R.id.last_name));
         editTextEntries.add(street = findViewById(R.id.street));
@@ -129,17 +147,12 @@ public class RemindersActivity extends AppCompatActivity {
             userEntryRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    VootUser vootUser = dataSnapshot.getValue(VootUser.class);
+                    VootUser receivedVootUser = dataSnapshot.getValue(VootUser.class);
 
-                    if (vootUser != null) {
-                        electionReminders.setChecked(vootUser.electionReminders);
-                        firstName.setText(vootUser.firstname);
-                        lastName.setText(vootUser.lastname);
-                        street.setText(vootUser.street);
-                        city.setText(vootUser.city);
-                        state.setText(vootUser.state);
-                        county.setText(vootUser.county);
-                        zipCode.setText(vootUser.zipcode);
+                    if (receivedVootUser != null) {
+                        vootUser = receivedVootUser;
+                        VootUserFetcher.saveSharedPreferences(getApplicationContext(), vootUser);
+                        updateUI();
                     } else {
                         throw new NullPointerException("Voot user was found to be null!");
                     }
@@ -205,7 +218,7 @@ public class RemindersActivity extends AppCompatActivity {
             return null;
         }
 
-        entryMap.put("electionReminders", electionReminders.isChecked());
+        //entryMap.put("electionReminders", electionReminders.isChecked());
 
         return entryMap;
     }
