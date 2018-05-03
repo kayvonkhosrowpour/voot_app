@@ -35,6 +35,7 @@ public class ContactRepActivity extends AppCompatActivity {
 
     // data
     Representative representative;
+    private boolean isRep;
 
     // GUI variables
     private TextView repName, userLocation, repInfo;
@@ -50,6 +51,7 @@ public class ContactRepActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             representative = (Representative) bundle.getSerializable(ViewRepresentativesActivity.REP);
+            isRep = bundle.getBoolean(ViewRepresentativesActivity.IS_REP);
         } else {
             Toast.makeText(getApplicationContext(), "Trouble fetching data. Please try again later.", Toast.LENGTH_SHORT).show();
             finish();
@@ -119,16 +121,18 @@ public class ContactRepActivity extends AppCompatActivity {
             portrait.setImageResource(R.drawable.default_portrait);
         } else {
             Picasso.with(getApplicationContext()).load(representative.getPhotoURL()).into(portrait);
-            portrait.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent();
-                    intent.setAction(Intent.ACTION_VIEW);
-                    intent.addCategory(Intent.CATEGORY_BROWSABLE);
-                    intent.setData(Uri.parse(representative.getWebsite()));
-                    startActivity(intent);
-                }
-            });
+            if (isRep) {
+                portrait.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent();
+                        intent.setAction(Intent.ACTION_VIEW);
+                        intent.addCategory(Intent.CATEGORY_BROWSABLE);
+                        intent.setData(Uri.parse(representative.getWebsite()));
+                        startActivity(intent);
+                    }
+                });
+            }
         }
 
         // set rep info
@@ -136,35 +140,41 @@ public class ContactRepActivity extends AppCompatActivity {
 
         // set call button
         final Activity ref = this;
-        callButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent callIntent = new Intent(Intent.ACTION_CALL);
-                String number = representative.getPhoneNumber().replaceAll("[^\\d.]", "");
-                Log.d("NUMBER", number);
-                callIntent.setData(Uri.parse(String.format("tel:%s", number)));
-                try {
-                    ActivityCompat.requestPermissions(ref,new String[]{CALL_PHONE},1);
-                    startActivity(callIntent);
-                } catch (SecurityException se) {
-                    Toast.makeText(getApplicationContext(), "You have not enabled call permissions for Voot", Toast.LENGTH_SHORT).show();
-                    se.printStackTrace();
+        if (isRep) {
+            callButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent callIntent = new Intent(Intent.ACTION_CALL);
+                    String number = representative.getPhoneNumber().replaceAll("[^\\d.]", "");
+                    Log.d("NUMBER", number);
+                    callIntent.setData(Uri.parse(String.format("tel:%s", number)));
+                    try {
+                        ActivityCompat.requestPermissions(ref, new String[]{CALL_PHONE}, 1);
+                        startActivity(callIntent);
+                    } catch (SecurityException se) {
+                        Toast.makeText(getApplicationContext(), "You have not enabled call permissions for Voot", Toast.LENGTH_SHORT).show();
+                        se.printStackTrace();
+                    }
                 }
-            }
-        });
+            });
 
-        // set email button
-        emailButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
-                        "mailto",representative.getEmail(), null));
-                intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.subject));
-                intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.email_body));
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(Intent.createChooser(intent, "Choose an Email client :"));
-            }
-        });
+            // set email button
+            emailButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
+                            "mailto", representative.getEmail(), null));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.subject));
+                    intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.email_body));
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    startActivity(Intent.createChooser(intent, "Choose an Email client :"));
+                }
+            });
+        } else {
+            callButton.setVisibility(View.INVISIBLE);
+            emailButton.setVisibility(View.INVISIBLE);
+        }
+
 
     }
 
@@ -173,7 +183,9 @@ public class ContactRepActivity extends AppCompatActivity {
 
         StringBuilder builder = new StringBuilder();
         builder.append(representative.getParty()).append('\n');
-        builder.append(representative.getOffice()).append('\n');
+        if (isRep) {
+            builder.append(representative.getOffice()).append('\n');
+        }
         repInfo.setText(builder.toString());
 
     }

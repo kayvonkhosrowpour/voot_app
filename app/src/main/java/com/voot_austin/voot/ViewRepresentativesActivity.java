@@ -36,6 +36,7 @@ public class ViewRepresentativesActivity extends AppCompatActivity {
 
     // references for intents
     public static final String REP = "REP";
+    public static final String IS_REP = "IS_REP";
 
     // GUI
     private RecyclerView recyclerView;
@@ -46,6 +47,8 @@ public class ViewRepresentativesActivity extends AppCompatActivity {
     // data
     private List<Representative> repData;
     private VootUser vootUser;
+
+    private boolean isRep; // true if normal Representatives activity, false for candidates
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,9 +75,15 @@ public class ViewRepresentativesActivity extends AppCompatActivity {
 
         // Grab Representative Data from last intent
         Bundle bundle = getIntent().getExtras();
-        if (bundle != null && repData == null)
+        if (bundle != null && repData == null) {
             repData = ((List<Representative>) bundle.getSerializable("representatives"));
-
+            if (repData == null) {
+                repData = ((List<Representative>) bundle.getSerializable(ViewElectionsActivity.CANDIDATES));
+                isRep = false;
+            } else {
+                isRep= true;
+            }
+        }
 
         if (repData == null)
             throw new NullPointerException("Representative Data is null!");
@@ -159,6 +168,7 @@ public class ViewRepresentativesActivity extends AppCompatActivity {
                     int itemPosition = recyclerView.getChildLayoutPosition(view);
                     intent.putExtra(ViewRepresentativesActivity.REP, repDataset.get(itemPosition));
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    intent.putExtra(IS_REP, isRep);
                     startActivity(intent);
                 }
             });
@@ -171,7 +181,9 @@ public class ViewRepresentativesActivity extends AppCompatActivity {
             repViewHolder.name.setText(repDataset.get(i).getName());
 
             // Set the text information for the representative card
-            repViewHolder.office.setText(repDataset.get(i).getOffice());
+            if (isRep) {
+                repViewHolder.office.setText(repDataset.get(i).getOffice());
+            }
             repViewHolder.party.setText(repDataset.get(i).getParty());
 
             // Set the photo for the representative card

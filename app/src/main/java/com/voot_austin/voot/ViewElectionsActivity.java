@@ -1,6 +1,7 @@
 package com.voot_austin.voot;
 
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -8,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +40,8 @@ import java.util.List;
 
 public class ViewElectionsActivity extends AppCompatActivity {
 
+    public static final String CANDIDATES = "CANDIDATES";
+
     private TextView location;
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
@@ -51,6 +55,13 @@ public class ViewElectionsActivity extends AppCompatActivity {
     List<String> stringContests = new ArrayList<String>();
     Integer numOfContests;
     ArrayList<Election> arrayListElections = new ArrayList<>();
+
+
+    JSONArray candidates;
+
+    ArrayList<Representative> arrayListReps = new ArrayList<>();
+    ArrayList<ArrayList<Representative>> arrayListCandidates = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -148,7 +159,20 @@ public class ViewElectionsActivity extends AppCompatActivity {
         @Override
         public ElecViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
             View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.elec_card, viewGroup, false);
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //open ContactRepActivity
+                    Intent intent = new Intent(getApplicationContext(), ViewRepresentativesActivity.class);
+                    int itemPosition = recyclerView.getChildAdapterPosition(view);
+                    intent.putExtra(CANDIDATES, arrayListCandidates.get(itemPosition));
+                    Log.d("OUTPUT123", arrayListCandidates.get(itemPosition).toString());
+                    startActivity(intent);
+
+                }
+            });
             ElecViewHolder ElecView = new ElecViewHolder(view);
+
             return ElecView;
         }
 
@@ -182,6 +206,25 @@ public class ViewElectionsActivity extends AppCompatActivity {
                     stringContests.add(jcontests.getJSONObject(i).get("office").toString());
                 }
             }
+
+            int j;
+
+            for(i = 0; i < jcontests.length(); i++) {
+                candidates = jcontests.getJSONObject(i).getJSONArray("candidates");
+                for(j = 0; j < candidates.length(); j++) {
+                    Representative rep = new Representative();
+                    rep.setName(candidates.getJSONObject(j).getString("name"));
+                    rep.setParty(candidates.getJSONObject(j).getString("party"));
+                    arrayListReps.add(rep);
+                }
+                arrayListCandidates.add(new ArrayList<Representative>(arrayListReps));
+                arrayListReps.clear();
+            }
+
+
+
+
+
 
         }
         catch(Exception e){

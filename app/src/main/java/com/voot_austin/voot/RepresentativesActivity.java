@@ -303,8 +303,6 @@ public class RepresentativesActivity extends AppCompatActivity {
                 String officeName = offices.getJSONObject(j).getString("name");
                 JSONArray officialIndices = offices.getJSONObject(j).getJSONArray("officialIndices");
 
-
-
                 for (int i = 0; i < officialIndices.length(); i++) {
                     JSONObject official = officials.getJSONObject(officialIndices.getInt(i));
 
