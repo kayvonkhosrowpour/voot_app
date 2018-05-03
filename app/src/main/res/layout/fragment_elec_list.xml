@@ -7,7 +7,7 @@
     android:layout_height="wrap_content"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    tools:context="com.voot_austin.voot.ElectionsActivity">
+    tools:context="com.voot_austin.voot.ViewElectionsActivity">
 
     <include layout="@layout/location_layout"
         android:layout_gravity="center"

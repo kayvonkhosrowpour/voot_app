@@ -154,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.elections_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), ElectionsActivity.class);
+                Intent intent = new Intent(getApplicationContext(), ViewElectionsActivity.class);
                 startActivity(intent);
             }
         });

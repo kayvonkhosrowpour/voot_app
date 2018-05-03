@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -59,6 +60,8 @@ public class PollLocationActivity extends AppCompatActivity implements OnMapRead
     double longi;
     String addSnippet = "";
 
+    boolean error = false;
+
     private FirebaseAuth firebaseAuth;
 
     private VootUser vootUser;
@@ -76,8 +79,13 @@ public class PollLocationActivity extends AppCompatActivity implements OnMapRead
 
         createMarker();
 
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+        if(!error) {
+            SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+            mapFragment.getMapAsync(this);
+        } else {
+            noPollLocation();
+            finish();
+        }
 
     }
 
@@ -116,8 +124,15 @@ public class PollLocationActivity extends AppCompatActivity implements OnMapRead
             resp.add(jsonAddd.getString("zip"));
         }
         catch(Exception e){
-            //nothing
+            //no polling locations listed
+            error = true;
         }
+    }
+
+    private void noPollLocation() {
+        Toast.makeText(getApplicationContext(), getString(R.string.poll_failed_error),
+                Toast.LENGTH_SHORT).show();
+        finish();
     }
 
     public void extractPollVars(String data) {
@@ -134,6 +149,7 @@ public class PollLocationActivity extends AppCompatActivity implements OnMapRead
         }
         catch(Exception e){
             //nothing
+            error = true;
         }
     }
 
@@ -234,7 +250,7 @@ public class PollLocationActivity extends AppCompatActivity implements OnMapRead
             extractAddVars(response);
         }
         catch(Exception e) {
-            //nothing
+            error = true;
         }
 
         //use arraylist address to call make geocoding call and make marker
@@ -263,15 +279,14 @@ public class PollLocationActivity extends AppCompatActivity implements OnMapRead
         try{
             String response2 = new GetUrlContentTask2().execute(requestURL2).get();
             extractPollVars(response2);
+            lati = Double.parseDouble(resp2.get(0));
+            longi = Double.parseDouble(resp2.get(1));
         }
         catch(Exception e) {
-            //nothing
+            error = true;
         }
 
         //map.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
-
-        lati = Double.parseDouble(resp2.get(0));
-        longi = Double.parseDouble(resp2.get(1));
     }
 
 }

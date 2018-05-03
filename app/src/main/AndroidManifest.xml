@@ -46,21 +46,13 @@
         </activity>
 
         <!--                          Elections                                -->
-        <activity
-            android:name=".ElectionsActivity"
-            android:label="@string/Upcoming_Elections"
-            android:launchMode="singleTop">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
-        </activity>
 
         <activity android:name=".ViewElectionsActivity"
             android:label="@string/Upcoming_Elections"
             android:launchMode="singleTop">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ElectionsActivity"/>
+                android:value=".ViewElectionsActivity"/>
         </activity>
 
         <!--                               Representatives                      -->
