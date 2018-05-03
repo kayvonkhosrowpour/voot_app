@@ -6,7 +6,7 @@
 
 <div>
   <img src="https://i.imgur.com/uziylpC.jpg" width="280"/>
-  <p>After registering for an account, a user can search for, view, and contact their representatives, view all upcoming elections based on their registered location, and find the nearest polling location for these elections.</p>
+  <p>After registering for an account, a user can search for, view, and contact their representatives, view all upcoming elections based on their registered location, and find the nearest polling location for these election. All within a single app! Performing your civic duties has never been made easier.</p>
 </div>
 
 ## Find, view, and contact your representatives
