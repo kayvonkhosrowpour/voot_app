@@ -5,19 +5,21 @@ Voot is a multi-platform application that connects Americans to their political 
 
 ## What can Voot do?
 
-After registering for an account, a user can search for, view, and contact their representatives, view all upcoming elections based on their registered location, and find the nearest polling location for these elections.
-
-#### Homescreen
-<div style="display: block; margin-left: auto; margin-right: auto; width: 40%;">
-<img src="https://i.imgur.com/uziylpC.jpg" width="280"/>
-</div>
-
-#### Find, view, and contact your representatives
 <div>
-<img src="https://i.imgur.com/ZLWA9ip.jpg" width="280" style="float:left;" />
-<img src="https://i.imgur.com/YJjKubm.jpg" width="280"/>
-<img src="https://i.imgur.com/egJMxQR.jpg" width="280"/>
+  <img src="https://i.imgur.com/uziylpC.jpg" width="280"/>
+  <p>After registering for an account, a user can search for, view, and contact their representatives, view all upcoming elections based on their registered location, and find the nearest polling location for these elections.</p>
 </div>
 
-#### View your upcoming elections and nearest polling location
-<img src="https://i.imgur.com/JZPapIx.jpg" width="280"/>
+### Find, view, and contact your representatives
+<div>
+  <img src="https://i.imgur.com/ZLWA9ip.jpg" width="280" style="float:left;" />
+  <img src="https://i.imgur.com/YJjKubm.jpg" width="280"/>
+  <img src="https://i.imgur.com/egJMxQR.jpg" width="280"/>
+  <p>Search for your representatives by your registered location, or search for a friend's representatives. View all of your representatives in a single list. Click on any one of them to see their information. Click their image to view their website. Call or email your representative.</p>
+</div>
+
+### View your upcoming elections and nearest polling location
+<div>
+  <img src="https://i.imgur.com/JZPapIx.jpg" width="280" style="float:left;" />
+  <p>The nearest polling location is automatically chosen according to your registered location.</p>
+</div>
