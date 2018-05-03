@@ -8,8 +8,8 @@ Voot is a multi-platform application that connects Americans to their political 
 After registering for an account, a user can search for, view, and contact their representatives, view all upcoming elections based on their registered location, and find the nearest polling location for these elections.
 
 #### Homescreen
-<div>
-<img src="https://i.imgur.com/uziylpC.jpg" style="display: block; margin-left: auto; margin-right: auto; width: 40%;" width="280"/>
+<div style="display: block; margin-left: auto; margin-right: auto; width: 40%;">
+<img src="https://i.imgur.com/uziylpC.jpg" width="280"/>
 </div>
 
 #### Find, view, and contact your representatives
