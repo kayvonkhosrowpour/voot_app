@@ -24,5 +24,5 @@
   <img src="https://i.imgur.com/Vi88cT3.jpg" width="280" style="float:left;"/>
   <img src="https://i.imgur.com/ACeGy0v.jpg" width="280"/>
   <img src="https://i.imgur.com/JZPapIx.jpg" width="280"/>
-  <p>The nearest polling location is automatically chosen according to your registered location.</p>
+  <p>View all of your upcoming elections according to your profile location. Click on any one of the elections to view all of the candidates for that specific election. You can also use the Polling Location tool to find the nearest polling location relative to your profile location.</p>
 </div>
