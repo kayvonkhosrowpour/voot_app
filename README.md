@@ -21,6 +21,8 @@
 ## View your upcoming elections and nearest polling location
 
 <div>
-  <img src="https://i.imgur.com/JZPapIx.jpg" width="280" style="float:left;" />
+  <img src="https://i.imgur.com/Vi88cT3.jpg" width="280" style="float:left;"/>
+  <img src="https://i.imgur.com/ACeGy0v.jpg" width="280"/>
+  <img src="https://i.imgur.com/JZPapIx.jpg" width="280"/>
   <p>The nearest polling location is automatically chosen according to your registered location.</p>
 </div>
